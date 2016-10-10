@@ -1,0 +1,141 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ManhDX
+ * Date: 13-Oct-15
+ * Time: 1:16 PM
+ */
+$lang['username'] = "";
+
+/********************* FORM LANGUAGE **********************/
+$lang['form_label_username'] = 'Username';
+$lang['form_label_name'] = 'Name';
+$lang['form_label_other_name'] = 'Other Name';
+$lang['form_label_date_of_birth'] = 'Date Of Birth';
+$lang['form_label_active'] = 'Active';
+$lang['form_label_gender'] = 'Gender';
+$lang['form_label_password'] = 'Password';
+$lang['form_label_user_group'] = 'User Group';
+$lang['form_label_address'] = 'Address';
+$lang['form_label_village'] = 'Village';
+$lang['form_label_language'] = 'Language';
+
+/***************** END FORM LANGUAGE **********************/
+
+
+$lang['Active List'] = 'Active List';
+$lang['Active Patient'] =  'Active Patient';
+$lang['Add'] =  'Add';
+$lang['Address'] =  'Address';
+$lang['Admission'] =  'Admission';
+$lang['Adult'] =  'Adult';
+$lang['Age'] =  'Age';
+$lang['Allergies'] =  'Allergies';
+$lang['Allergy'] =  'Allergy';
+$lang['BI ID'] =  'BI ID';
+$lang['Birth'] =  'Birth';
+$lang['Blood'] =  'Blood';
+$lang['Cancel'] =  'Cancel';
+$lang['Card'] =  'Card';
+$lang['Civil Status'] =  'Civil Status';
+$lang['Clinical'] =  'Clinical';
+$lang['Complaint'] =  'Complaint';
+$lang['Critical'] =  'Critical';
+$lang['Daily'] =  'Daily';
+$lang['Date'] =  'Date';
+$lang['Date of Birth'] =  'Date of Birth';
+$lang['Day'] =  'Day';
+$lang['Department'] =  'Department';
+$lang['Detail'] =  'Detail';
+$lang['Discharge'] =  'Discharge';
+$lang['Dispense Drugs'] =  'Dispense Drugs';
+$lang['Dispensed Drugs'] =  'Dispensed Drugs';
+$lang['Doctor'] =  'Doctor';
+$lang['Dont have enough privilages'] = 'Dont have enough privilages';
+$lang['Dosage'] =  'Dosage';
+$lang['Drug'] =  'Drug';
+$lang['Drugs dosage']= 'Drugs dosage';
+$lang['Drugs frequency']= 'Drugs frequency';
+$lang['Dys'] =  'Dys';
+$lang['Edit'] =  'Edit';
+$lang['Emergency'] =  'Emergency';
+$lang['EMR'] =  'EMR';
+$lang['Examination'] =  'Examination';
+$lang['frequency'] =  'frequency';
+$lang['Full Name'] =  'Full Name';
+$lang['Gender'] =  'Gender';
+$lang['Group'] =  'Group';
+$lang['Height'] =  'Height';
+$lang['Hello'] =  'Hello';
+$lang['History'] =  'History';
+$lang['Injection'] =  'Injection';
+$lang['Lab'] =  'Lab';
+$lang['Laboratory'] =  'Laboratory';
+$lang['Latest'] =  'Latest';
+$lang['Login'] =  'Login';
+$lang['Male'] =  'Male';
+$lang['Medication'] =  'Medication';
+$lang['Month'] =  'Month';
+$lang['Mr.'] = 'Mr.';
+$lang['Mths'] =  'Mths';
+$lang['My Observed  Patients'] =  'My Observed  Patients';
+$lang['New Patient'] =  'New Patient';
+$lang['New Registration'] =  'New Registration';
+$lang['Newborn'] =  'Newborn';
+$lang['Note'] =  'Note';
+$lang['NUIT ID'] =  'NUIT ID';
+$lang['Nurse'] =  'Nurse';
+$lang['Nursing'] =  'Nursing';
+$lang['OPD'] =  'OPD';
+$lang['Order'] =  'Order';
+$lang['Other'] =  'Other';
+$lang['Pain'] =  'Pain';
+$lang['Password'] =  'Password';
+$lang['Patient'] =  'Patient';
+$lang['Patient ID'] =  'Patient NID';
+$lang['Pending'] =  'Pending';
+$lang['Permission'] =  'Permission';
+$lang['Pharmacist'] =  'Pharmacist';
+$lang['Pharmacy'] =  'Pharmacy';
+$lang['Picture'] =  'Picture';
+$lang['Preferences'] =  'Preferences';
+$lang['Prescription'] =  'Prescription';
+$lang['Previous'] =  'Previous';
+$lang['Print'] =  'Print';
+$lang['Procedure'] =  'Procedure';
+$lang['Pulse'] =  'Pulse';
+$lang['Refer'] =  'Refer';
+$lang['Register'] =  'Register';
+$lang['Remark'] =  'Remark';
+$lang['Report'] =  'Report';
+$lang['Reset'] =  'Reset';
+$lang['Respiratory'] =  'Respiratory';
+$lang['Result'] =  'Result';
+$lang['Room'] =  'Room';
+$lang['Saturation'] =  'Saturation';
+$lang['Save'] =  'Save';
+$lang['Search Patient'] =  'Search Patient';
+$lang['Severity'] =  'Severity';
+$lang['Status'] =  'Status';
+$lang['Summary'] =  'Summary';
+$lang['System'] =  'System';
+$lang['Table'] =  'Table';
+$lang['Technician'] =  'Technician';
+$lang['Telephone'] =  'Telephone';
+$lang['Temperature'] =  'Temperature';
+$lang['Test'] =  'Test';
+$lang['Time'] =  'Time';
+$lang['Treate'] =  'Treate';
+$lang['Treated'] =  'Treated';
+$lang['Treatment'] =  'Treatment';
+$lang['Triage'] =  'Triage';
+$lang['Type'] =  'Type';
+$lang['User'] =  'User';
+$lang['Username'] =  'Username';
+$lang['Village'] =  'Village';
+$lang['Voice'] =  'Voice';
+$lang['Waiting Patients'] =  'Waiting Patients';
+$lang['Ward'] =  'Ward';
+$lang['Weight'] =  'Weight';
+$lang['Year'] =  'Year';
+$lang['Yrs'] =  'Yrs';

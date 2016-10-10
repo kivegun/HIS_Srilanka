@@ -1,0 +1,8 @@
+1. Template
+
+http://code.tutsplus.com/tutorials/an-introduction-to-views-templating-in-codeigniter--net-25648
+
+2. HMVC
+
+https://bitbucket.org/wiredesignz/codeigniter-modular-extensions-hmvc/src
+
