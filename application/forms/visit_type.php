@@ -41,43 +41,43 @@ $form["DISPLAY_LIST"] = array (
     'Active'
 );
 
-$form["FLD"][0]=array(
-    "Id"=>"Name", "Name"=>"Name",
-    "Type"=>"text",  "Value"=>"",
-    "Help"=>"Type", "Ops"=>"",
-    "valid"=>"*"
-);
-$form["FLD"][1]=array(
-    "Id"=>"Stock", "Name"=>"Pharmacy stock",
-    "Type"=>"select",  "Value"=>array("Stock","ClinicStock"),
-    "Help"=>"What stock to be used", "Ops"=>"",
-    "valid"=>"*"
-);
-$form["FLD"][2]=array(
-    "Id"=>"Remarks", "Name"=>"Remarks",    "Type"=>"textarea",
-    "Value"=>"",     "Help"=>"Remarks",   "Ops"=>"",
-    "valid"=>""
-);
-$form["FLD"][3]=array(
-    "Id"=>"Active",    "Name"=>"Active",  "Type"=>"bool",
-    "Value"=>"",   "Help"=>"Active or not",  "Ops"=>"",
-    "valid"=>""
-);
-
-$form["FLD"][4]=array(
-    "Id"=>"_", "Name"=>"",   "Type"=>"line",     "Value"=>"",     "Help"=>"",   "Ops"=>""
-);
-$form["BTN"][0]=array(
-    "Id"=>"SaveBtn",    "Name"=>"Save",   "Type"=>"button", "Value"=>"Save",
-    "Help"=>"",   "Ops"=>"",  "onclick"=>"saveData()",
-    "Next"=>""
-);
-
-$form["BTN"][1]=array(
-    "Id"=>"CancelBtn",    "Name"=>"Cancel", "Type"=>"button",  "Value"=>"Cancel",
-    "Help"=>"", "Ops"=>"", "onclick"=>"window.history.back()",
-    "Next"=>""
-);
+//$form["FLD"][0]=array(
+//    "Id"=>"Name", "Name"=>"Name",
+//    "Type"=>"text",  "Value"=>"",
+//    "Help"=>"Type", "Ops"=>"",
+//    "valid"=>"*"
+//);
+//$form["FLD"][1]=array(
+//    "Id"=>"Stock", "Name"=>"Pharmacy stock",
+//    "Type"=>"select",  "Value"=>array("Stock","ClinicStock"),
+//    "Help"=>"What stock to be used", "Ops"=>"",
+//    "valid"=>"*"
+//);
+//$form["FLD"][2]=array(
+//    "Id"=>"Remarks", "Name"=>"Remarks",    "Type"=>"textarea",
+//    "Value"=>"",     "Help"=>"Remarks",   "Ops"=>"",
+//    "valid"=>""
+//);
+//$form["FLD"][3]=array(
+//    "Id"=>"Active",    "Name"=>"Active",  "Type"=>"bool",
+//    "Value"=>"",   "Help"=>"Active or not",  "Ops"=>"",
+//    "valid"=>""
+//);
+//
+//$form["FLD"][4]=array(
+//    "Id"=>"_", "Name"=>"",   "Type"=>"line",     "Value"=>"",     "Help"=>"",   "Ops"=>""
+//);
+//$form["BTN"][0]=array(
+//    "Id"=>"SaveBtn",    "Name"=>"Save",   "Type"=>"button", "Value"=>"Save",
+//    "Help"=>"",   "Ops"=>"",  "onclick"=>"saveData()",
+//    "Next"=>""
+//);
+//
+//$form["BTN"][1]=array(
+//    "Id"=>"CancelBtn",    "Name"=>"Cancel", "Type"=>"button",  "Value"=>"Cancel",
+//    "Help"=>"", "Ops"=>"", "onclick"=>"window.history.back()",
+//    "Next"=>""
+//);
 
 //$form["FLD"]=array(
 //    array(

@@ -35,8 +35,8 @@ $form["FORM_CAPTION"] = "Drugs Frequency";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/drugs_frequency";	
 //pager starts
-$form["CAPTION"]  = "Drugs frequency <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('/drug_frequency/create')."\' value=\'Add new drug frequency\'>";
-$form["ACTION"]  = base_url()."index.php/drug_frequency/edit/";
+$form["CAPTION"]  = "Drugs frequency <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('/drugs_frequency/create')."\' value=\'Add new drug frequency\'>";
+$form["ACTION"]  = base_url()."index.php/drugs_frequency/edit/";
 $form["ROW_ID"]="DFQYID";
 $form ["COLUMN_MODEL"] = array (
     'DFQYID' => array (

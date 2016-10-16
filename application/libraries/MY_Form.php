@@ -156,6 +156,29 @@ class MY_Form extends FormController
         echo '</div>';
     }
 
+    public function text_area_lookup($label = '', $name = '', $default_value = '', $place_holder = '', $extra = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+        $data_text_area = array(
+            'class' => 'input',
+            'name' => $name,
+            'id' => $name,
+            'rows' => 3,
+            'placeholder' => $place_holder,
+            'style' => 'width:450;'
+        );
+        echo '<div class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo form_textarea($data_text_area, set_value($name, $default_value), $extra);
+        echo form_error($name);
+        echo '<img src="'.base_url().'images/clear.png" title="Clear field" width="15" height="15" valign="top" style="cursor:pointer" onclick="$(\'#ICDLink\').val(\'\')">';
+        echo '<lable id="hICDLink" class="fieldHelp" style="visibility: hidden;">ICD link</lable>';
+        echo '<div id="icdDiv" title="ICD lookup"></div>';
+        echo '</div>';
+    }
+
     public function password($label = '', $name = '', $default_value = '', $place_holder = '')
     {
         $data_label = array(

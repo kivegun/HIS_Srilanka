@@ -34,8 +34,8 @@ $form["FORM_CAPTION"] = "Treatment";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/treatment";	
 //pager starts
-$form["CAPTION"]  = "Treatments <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('treatment/create')."\' value=\'Add new treatment\'>";
-$form["ACTION"]  = base_url()."index.php/treatment/edit/";
+$form["CAPTION"]  = "Treatments <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('treatments/create')."\' value=\'Add new treatment\'>";
+$form["ACTION"]  = base_url()."index.php/treatments/edit/";
 $form["ROW_ID"]="TREATMENTID";
 $form ["COLUMN_MODEL"] = array (
     'TREATMENTID' => array (

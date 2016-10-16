@@ -34,7 +34,7 @@ $form["FORM_CAPTION"] = "Canned Text";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/canned_text";
 //pager starts
-$form["CAPTION"]  = "Canned Text <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('/drug_frequency/create')."\' value=\'Add/Edit Canned text\'>";
+$form["CAPTION"]  = "Canned Text <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('/canned_text/create')."\' value=\'Add/Edit Canned text\'>";
 $form["ACTION"]  = base_url()."index.php/canned_text/edit/";
 $form["ROW_ID"]="CTEXTID";
 $form ["COLUMN_MODEL"] = array (

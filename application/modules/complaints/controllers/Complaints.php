@@ -58,15 +58,19 @@ class Complaints extends FormController
     public function edit($id)
     {
         $complaints = $this->m_complaints->get($id);
-        if (empty($complaints))
-            die('Id not exist');
+//        if (empty($complaints))
+//            die('Id not exist');
         $data['id'] = $id;
-        $data['default_ICPCCode'] = $complaints->ICPCCode;
         $data['default_Name'] = $complaints->Name;
-        $data['default_ICDCode'] = $complaints->ICDCode;
+        $data['default_Type'] = $complaints->Type;
+        $data['default_ICD_link'] = $complaints->ICDLink;
         $data['default_isNotify'] = $complaints->isNotify;
         $data['default_Remarks'] = $complaints->Remarks;
         $data['default_Active'] = $complaints->Active;
+        $data['default_create_date'] = $complaints->CreateDate;
+        $data['default_create_user'] = $complaints->CreateUser;
+        $data['default_last_update'] = $complaints->LastUpDate;
+        $data['default_last_update_user'] = $complaints->LastUpDateUser;
 
         $this->set_common_validation();
 
@@ -74,12 +78,12 @@ class Complaints extends FormController
             $this->load_form($data);
         } else {
             $data = array(
-                'ICPCCode' => $this->input->post('ICPCCode'),
-                'Name' => $this->input->post('Name'),
-                'ICDCode' => $this->input->post('ICDCode'),
+                'Name' => $this->input->post('name'),
+                'Type' => $this->input->post('type'),
+                'ICDLink' => $this->input->post('ICDLink'),
                 'isNotify' => $this->input->post('isNotify'),
-                'Remarks' => $this->input->post('Remarks'),
-                'Active' => $this->input->post('Active'),
+                'Remarks' => $this->input->post('remarks'),
+                'Active' => $this->input->post('active'),
             );
             $this->m_complaints->update($id, $data);
             $this->session->set_flashdata(

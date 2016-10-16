@@ -35,8 +35,8 @@ $form["FORM_CAPTION"] = "Drugs Dosage";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/drugs_dosage";	
 //pager starts
-$form["CAPTION"]  = "Drugs dosage <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('drug_dosage/create')."\' value=\'Add new dosage\'>";
-$form["ACTION"]  = base_url()."index.php/drug_dosage/edit/";
+$form["CAPTION"]  = "Drugs dosage <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('drugs_dosage/create')."\' value=\'Add new dosage\'>";
+$form["ACTION"]  = base_url()."index.php/drugs_dosage/edit/";
 $form["ROW_ID"]="DDSGID";
 $form ["COLUMN_MODEL"] = array (
     'DDSGID' => array (

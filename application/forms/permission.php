@@ -33,7 +33,7 @@ $form["FORM_CAPTION"] = "Group permissions";
 $form["SAVE"] = "";
 $form["NEXT"] = "preference/load/user_group";
 //pager starts
-$form["CAPTION"] = "Available user <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'" . site_url ( 'user/create/' ) . "\' value=\'Add new visit type\'>";
+$form["CAPTION"] = "Available user <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'" . site_url ( 'permission/edit/' ) . "\' value=\'Create the permissions for a new group\'>";
 $form["ACTION"] = base_url() . "index.php/permission/edit/";
 $form["ROW_ID"] = "PRMID";
 $form["COLUMN_MODEL"] = array('PRMID' => array("width" => "35px"), 'UserGroup', 'Remarkss' );

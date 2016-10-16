@@ -2,7 +2,7 @@
     <div id="mdsHead" class="mdshead">System User</div>
 
     <?php
-    $form_generator = new MY_Form('Visit_type');
+    $form_generator = new MY_Form('Complaints');
     $form_generator->form_open_current_url();
     $form_generator->input('*Complaint', 'name', $default_Name, 'Complaint Name');
     $type_option = array(
@@ -15,13 +15,18 @@
     );
     $form_generator->dropdown('Type', 'type', $type_option, $default_Type);
     ?>
-    <div id="fcICDLink" class="fieldCont">
-    <div class="caption">ICD Link</div>
-    <textarea name="ICDLink" id="ICDLink" pos="2" rows="2" class="input" style="width:450px;" readonly="" onfocus="onclick=lookUpICD('ICDLink','','ICDLink',$('#SNOMEDmap').val());"></textarea>
-    <img src="<?php echo base_url() ?>images/clear.png" title="Clear field" width="15" height="15" valign="top" style="cursor:pointer" onclick="$('#ICDLink').val('')">
-    <lable id="hICDLink" class="fieldHelp" style="visibility: hidden;">ICD link</lable>
-    <div id="icdDiv" title="ICD lookup"></div>
-    </div>
+<!--    <textarea name="ICDLink" id="ICDLink" pos="2" rows="2" class="input" style="width:450px;" readonly="" onfocus="onclick=lookUpICD('ICDLink','','ICDLink',$('#SNOMEDmap').val());"></textarea>-->
+
+    <?php
+        $icd_link = array(
+            'pos' => '2',
+            'rows' => '2',
+            'readonly' => '',
+            'onfocus' => 'onclick=lookUpICD(\'ICDLink\',\'\',\'ICDLink\',$(\'#SNOMEDmap\').val());'
+        );
+        $form_generator->text_area_lookup('ICD Link', 'ICDLink', $default_ICD_link, 'ICD link', $icd_link);
+        ?>
+
     <?php
     $form_generator->dropdown('is Notifiable', 'isNotify', array('1' => 'Yes', '0' => 'No'), $default_isNotify);
     $form_generator->text_area('Remarks', 'remarks', $default_Remarks, 'Any Remarks');

@@ -35,8 +35,8 @@ $form["FORM_CAPTION"] = "Lab Test Group";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/lab_test_group";	
 //pager starts
-$form["CAPTION"]  = "Lab test group <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test/create_lab_test_group')."\' value=\'Add new Lab Group\'>";
-$form["ACTION"]  = base_url()."index.php/lab_test/edit_lab_test_group/";
+$form["CAPTION"]  = "Lab test group <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test_group/create')."\' value=\'Add new Lab Group\'>";
+$form["ACTION"]  = base_url()."index.php/lab_test_group/edit/";
 $form["ROW_ID"]="LABGRPTID";
 $form ["COLUMN_MODEL"] = array (
     'LABGRPTID' => array (
