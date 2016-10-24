@@ -22,7 +22,7 @@
             <input type='button' class='submenuBtn' value='Lab Test' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/lab_tests'" >
             <input type='button' class='submenuBtn' value='Lab Test Group' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/lab_test_group'" >
             <input type='button' class='submenuBtn' value='Lab Test Department' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/lab_test_department'" >
-            <input type='button' class='submenuBtn' value='Wards' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/ward'" >
+            <input type='button' class='submenuBtn' value='Wards' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/wards'" >
             <input type='button' class='submenuBtn' value='Questionnaires' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/questionnaires'" >
         </div>
         <a class='LeftMenuItem' href=''>Application Tables</a>

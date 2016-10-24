@@ -165,9 +165,12 @@ class MY_Form extends FormController
             'class' => 'input',
             'name' => $name,
             'id' => $name,
-            'rows' => 3,
+            'rows' => 2,
             'placeholder' => $place_holder,
-            'style' => 'width:450;'
+            'style' => 'width:450;',
+            'pos' => '2',
+            'readonly' => NULL,
+            'onfocus' => 'onclick=lookUpICD(\'ICDLink\',\'\',\'ICDLink\',$(\'#SNOMEDmap\').val());'
         );
         echo '<div class="fieldCont">';
         echo form_label($label, $name, $data_label);

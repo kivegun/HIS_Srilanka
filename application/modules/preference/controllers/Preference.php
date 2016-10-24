@@ -348,7 +348,7 @@ class Preference extends LoginCheckController
         $this->load->view('preference_list');
     }
 
-    public function ward()
+    public function wards()
     {
 
         $this->load->model('msystem');
@@ -357,8 +357,8 @@ class Preference extends LoginCheckController
         $this->data["header"] = array('WID', 'Name', 'Type', 'Telephone', 'BedCount', 'Remarks', 'Active');
         $this->data["display_header"] = array('ID', 'Name', 'Type', 'Telephone', 'BedCount', 'Remarks', 'Active');
         $this->data["table"] = "ward";
-        $this->data["config"]['base_url'] = base_url() . 'index.php/preference/load/ward';
-        $this->data["config"]['total_rows'] = $this->msystem->get_total_active("ward");
+        $this->data["config"]['base_url'] = base_url() . 'index.php/preference/load/wards';
+        $this->data["config"]['total_rows'] = $this->msystem->get_total_active("wards");
         $this->load->vars($this->data);
         $this->load->view('preference_list');
     }

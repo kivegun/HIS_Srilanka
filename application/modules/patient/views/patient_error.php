@@ -26,59 +26,20 @@ URL: http: www.hhims.org
 ----------------------------------------------------------------------------------
 */
 
-
-////////Configuration for patient form
-$form = array();
-$form["OBJID"] = "WID";
-$form["TABLE"] = "ward";
-$form["FORM_CAPTION"] = "Ward";
-$form["SAVE"] = "";
-$form["NEXT"]  = "preference/load/ward";	
-//pager starts
-$form["CAPTION"]  = "Ward <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('ward/create')."\' value=\'Add new User/Ward\'>";
-$form["ACTION"]  = base_url()."index.php/ward/edit/";
-$form["ROW_ID"]="WID";
-$form ["COLUMN_MODEL"] = array (
-    'WID' => array (
-        "width" => "35px"
-    ),
-    'Name',
-    'Type',
-    'Telephone',
-    'BedCount',
-    'Remarks',
-    'Active' => array (
-        'stype' => 'select',
-        'editoptions' => array (
-            'value' => ':All;1:Yes;0:No'
-        )
-    ),
-);
-$form ["ORIENT"] = "L";
-$form ["LIST"] = array (
-    'WID',
-    'Name',
-    'Type',
-    'Telephone',
-    'BedCount',
-    'Remarks',
-    'Active'
-);
-$form ["DISPLAY_LIST"] = array (
-    'ID',
-    'Name',
-    'Type',
-    'Telephone',
-    'BedCount',
-    'Remarks',
-    'Active'
-);
-
-$patient["JS"] = "
-<script>
-function ForceSave(){
-}
-</script>
-";  									
-////////Configuration for patient form END;                   
+echo Modules::run('template/header');	///loads the html HEAD section (JS,CSS)
 ?>
+<?php echo Modules::run('menu'); //runs the available menu option to that usergroup ?>
+<div class="container" style="width:95%;">
+	<div class="row" style="margin-top:55px;">
+	  <div class="col-md-2 ">
+	  </div>
+	  <div class="col-md-10 ">
+				 <?php 
+					if (isset($error)){
+						echo '<div class="alert alert-danger"><b>ERROR:</b>'.$error.'</div>';
+						exit;
+					}
+				?>	
+		</div>
+	</div>
+</div>

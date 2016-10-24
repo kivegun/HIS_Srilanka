@@ -12,6 +12,10 @@ class Permission extends LoginCheckController
     {
         parent::__construct();
         //$this->load->model('m_user_group_have_permission');
+        $this->load->helper('form');
+        $this->load->model('m_permission');
+        //$this->load->model('m_user_group');
+        $this->form_validation->set_error_delimiters('<span class="field_error">', '</span>');
     }
 
     public function edit($prmid)
@@ -21,18 +25,17 @@ class Permission extends LoginCheckController
 //            die('You do not have permission!');
 //        }
         $this->load->model('m_permission');
-        $this->load->model('m_user_group');
+        //$this->load->model('m_user_group');
 
         $permission = $this->m_permission->get($prmid);
 
         $data['user_group'] = $this->m_permission->get($prmid);
-        if (empty($permission)
+        if (empty($permission))
             die('User group not found');
 
         $data['id'] = $prmid;
         $data['default_user_group'] = $permission->UserGroup;
         $data['default_permission'] = $permission->UserAccess;
-        $data['default_active'] = $permission->Active;
         $data['default_remarks'] = $permission->Remarks;
         $data['default_create_date'] = $permission->CreateDate;
         $data['default_create_user'] = $permission->CreateUser;
@@ -43,21 +46,30 @@ class Permission extends LoginCheckController
 //        $data['all_user_group_have_permission'] = $this->m_user_group_have_permission->get_many_by(array('UGID' => $ugid));
         $this->form_validation->set_rules('permission[]', 'Permission', 'required');
 
+
         if ($this->form_validation->run() == FALSE) {
             $this->qch_template->load_form_layout('view_permission', $data);
         } else {
+            $this->qch_template->load_form_layout('view_permission', $data);
             $data = array(
                 'UserGroup' => $this->input->post('user_group'),
-                'UserAccess' => $this->input->post('permission'),
+                'UserAccess' => $this->input->post('UserAccess'),
                 'Remarks' => $this->input->post('remarks'),
             );
-            $this->m_visit_type->update($prmid, $data);
+            $this->m_permission->update($prmid, $data);
             $this->session->set_flashdata(
                 'msg', 'Updated'
+//            var_dump($data['default_user_group']);
             );
             $this->redirect_if_no_continue('preference/load/permission');
+
         }
 
+
+    }
+
+    public function button($data = array()){
+        var_dump($data);
     }
 
 //    public function check_permission($name, $type) {

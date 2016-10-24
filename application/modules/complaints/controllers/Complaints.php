@@ -8,7 +8,7 @@
  */
 class Complaints extends FormController
 {
-    var $FORM_NAME = 'form_complaint';
+    var $FORM_NAME = 'form_complaints';
 
     public function __construct()
     {
@@ -58,8 +58,8 @@ class Complaints extends FormController
     public function edit($id)
     {
         $complaints = $this->m_complaints->get($id);
-//        if (empty($complaints))
-//            die('Id not exist');
+        if (empty($complaints))
+            die('Id not exist');
         $data['id'] = $id;
         $data['default_Name'] = $complaints->Name;
         $data['default_Type'] = $complaints->Type;

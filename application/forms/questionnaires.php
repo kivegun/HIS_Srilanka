@@ -34,7 +34,7 @@ $form["FORM_CAPTION"] = "Questionnaires";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/questionnaires";
 //pager starts
-$form["CAPTION"]  = "Ward <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('ward/create')."\' value=\'Create a new Questionnaire\'>";
+$form["CAPTION"]  = "Ward <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('questionnaires/create')."\' value=\'Create a new Questionnaire\'>";
 $form["ACTION"]  = base_url()."index.php/questionnaires/edit/";
 $form["ROW_ID"]="QUES_ST_ID";
 $form ["COLUMN_MODEL"] = array (

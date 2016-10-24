@@ -76,7 +76,7 @@
                             <div class='menu'>
                                 <input type='button' class='menuBtn'  value='Home' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Preference' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='New Patient' onmousedown=execute(String(''),this)>
+                                <input type='button' class='menuBtn'  value='New Patient' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/create'">
                                 <input type='button' class='menuBtn'  value='Search' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Pharmacy' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Laboratory' onmousedown=execute(String(''),this)>

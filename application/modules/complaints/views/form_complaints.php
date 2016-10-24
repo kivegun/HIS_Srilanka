@@ -18,13 +18,8 @@
 <!--    <textarea name="ICDLink" id="ICDLink" pos="2" rows="2" class="input" style="width:450px;" readonly="" onfocus="onclick=lookUpICD('ICDLink','','ICDLink',$('#SNOMEDmap').val());"></textarea>-->
 
     <?php
-        $icd_link = array(
-            'pos' => '2',
-            'rows' => '2',
-            'readonly' => '',
-            'onfocus' => 'onclick=lookUpICD(\'ICDLink\',\'\',\'ICDLink\',$(\'#SNOMEDmap\').val());'
-        );
-        $form_generator->text_area_lookup('ICD Link', 'ICDLink', $default_ICD_link, 'ICD link', $icd_link);
+
+        $form_generator->text_area_lookup('ICD Link', 'ICDLink', $default_ICD_link, 'ICD link');
         ?>
 
     <?php
