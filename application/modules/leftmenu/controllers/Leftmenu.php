@@ -39,6 +39,11 @@ class Leftmenu extends LoginCheckController
         $this->load->view('left_menu_ward');
     }
 
+    public function ward_admission()
+    {
+        $this->load->view('left_menu_ward_admission');
+    }
+
     public function chat()
     {
         $this->load->view('left_menu_chat');

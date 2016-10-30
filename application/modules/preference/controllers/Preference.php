@@ -372,7 +372,7 @@ class Preference extends LoginCheckController
         $this->data["header"] = array('FINDID', 'CONCEPTID', 'TERM');
         $this->data["display_header"] = array('ID', 'CONCEPTID', 'TERM');
         $this->data["table"] = "finding";
-        $this->data["config"]['base_url'] = base_url() . 'index.php/preference/load/finding';
+        $this->data["config"]['base_url'] = base_url() . 'index.php/preference/load/snomed_findings';
         $this->data["config"]['total_rows'] = $this->msystem->get_total_active("finding");
         $this->load->vars($this->data);
         $this->load->view('preference_list');

@@ -32,10 +32,10 @@ $form["OBJID"] = "FINDID";
 $form["TABLE"] = "finding";
 $form["FORM_CAPTION"] = "Findings";
 $form["SAVE"] = "";
-$form["NEXT"]  = "preference/load/findings";
+$form["NEXT"]  = "preference/load/snomed_findings";
 //pager starts
 $form["CAPTION"]  = "Findings";
-$form["ACTION"]  = base_url()."index.php/findings/edit/";
+$form["ACTION"]  = base_url()."index.php/snomed_findings/edit/";
 $form["ROW_ID"]="FINDID";
 $form ["COLUMN_MODEL"] = array (
     'FINDID' => array (

@@ -35,7 +35,7 @@ $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/disorders";
 //pager starts
 $form["CAPTION"]  = "Disorder";
-$form["ACTION"]  = base_url()."index.php/disorder/edit/";
+$form["ACTION"]  = base_url()."index.php/disorders/edit/";
 $form["ROW_ID"]="DISORDERID";
 $form ["COLUMN_MODEL"] = array (
     'DISORDERID' => array (

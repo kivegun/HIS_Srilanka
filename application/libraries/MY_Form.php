@@ -130,6 +130,54 @@ class MY_Form extends FormController
         echo '</div>';
     }
 
+    public function input_nic($label = '', $name = '', $default_value = '', $place_holder = '', $extra = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+        $data_text = array(
+            'class' => 'input',
+            'name' => 'NIC',
+            'id' => 'NIC',
+            'placeholder' => $place_holder,
+            'style' => 'width:200;',
+            'pos' => '7',
+        );
+        echo '<div class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo form_input($data_text, set_value($name, $default_value), $extra);
+        echo form_error($name);
+        echo '<img src="'.base_url().'images/search.png" title="Search for this NIC" valign="bottom" style="cursor:pointer;" onclick="checkBeforeSave({data:({NIC:$(\'#NIC\').val(),})});">';
+        echo '</div>';
+    }
+
+    public function input_patient_name($label = '', $name = '', $default_value = '', $place_holder = '', $extra = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+        $data_text = array(
+            'class' => 'input',
+            'name' => $name,
+            'id' => $name,
+            'placeholder' => $place_holder,
+            'style' => 'font-weight:bold;font-size:16;height:25px;width:400px;',
+            'pos' => '7',
+        );
+        echo '<div class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo form_input($data_text, set_value($name, $default_value), $extra);
+        echo form_error($name);
+        echo '<script language="javascript">';
+        echo '$( document).ready(function() {';
+        echo '    $(\'#Full_Name_Registered\').keyup(function(){';
+        echo '        ajaxLookUp($(this)) ;';
+        echo '    })';
+        echo '                  })';
+        echo '</script>';
+        echo '</div>';
+    }
+
     public function input_date($label = '', $name = '', $default_value = '', $place_holder = '')
     {
         $js = 'onmousedown="onmousedown=$(\'#' . $name . '\').datepicker({changeMonth: true,changeYear: true,yearRange: \'c-40:c+40\',dateFormat: \'yy-mm-dd\',maxDate: \'+0D\'});"';
@@ -181,6 +229,7 @@ class MY_Form extends FormController
         echo '<div id="icdDiv" title="ICD lookup"></div>';
         echo '</div>';
     }
+
 
     public function password($label = '', $name = '', $default_value = '', $place_holder = '')
     {

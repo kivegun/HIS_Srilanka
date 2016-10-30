@@ -1,70 +1,3 @@
-<?php
-//if ($this->session->flashdata('msg')) {
-//    echo '<div class="row">';
-//    echo '<div class="col-lg-4">';
-//    echo '</div>';
-//    echo '<div class="col-lg-4">';
-//    echo '</div>';
-//    echo '<div class="col-lg-4">';
-//    echo '<div class="alert alert-warning alert-dismissable" id="top_message" style="position:absolute;z-index:999999;">';
-//    echo '<button type="button" class="close" data-dismiss="alert">×</button>';
-//    echo $this->session->flashdata('msg');
-//    echo '</div>';
-//    echo '</div>';
-//    echo '</div>';
-//}
-//?>
-<!---->
-<!--<div class="page-header">-->
-<!--    <div class="logo">-->
-<!--        <img src="--><?php //echo base_url('images/logo_moz.png') ?><!--">-->
-<!---->
-<!--        <div class="pull-right" style="height: 61px; padding-top: 10px;">-->
-<!--            <span class="pull-right" style="color: #999">--><?php //echo date('Y-m-d'); ?>
-<!--                <span class="label label-danger">--><?php //echo $this->session->userdata('department'); ?><!-- Department</span></span><br>-->
-<!--            <span-->
-<!--                style="color: #999">Hello <b>--><?php //echo $this->session->userdata('title') . ' ' . $this->session->userdata('name') . ' ' . $this->session->userdata('other_name'); ?><!--</b></span>-->
-<!--            <span class="label label-primary">--><?php //echo $this->session->userdata('user_group_name'); ?><!--</span>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--    <nav class="navbar navbar-default">-->
-<!--        <div class="container-fluid">-->
-<!--            <div class="row">-->
-<!--                <ul class="nav navbar-nav">-->
-<!--                    --><?php
-//                    foreach ($top_menu as $menu) {
-//                        if (strtolower($menu['Link']) === strtolower($active_menu_link)) {
-//                            echo '<li class="active">';
-//                        } else {
-//                            echo '<li>';
-//                        }
-//                        echo '<a class="top-menu" href="' . site_url() . '/' . $menu['Link'] . '">' . $this->lang->line($menu['Name']) . '</a>';
-//                        echo '</li>';
-//                    }
-//                    ?>
-<!---->
-<!--                </ul>-->
-<!--                <ul class="nav navbar-nav navbar-right pull-right">-->
-<!--                    <li><a-->
-<!--                            href="--><?php //echo site_url('hhims') ?><!--">Home</a>-->
-<!--                    </li>-->
-<!--                    --><?php
-//                    if ('user_config' === strtolower($active_menu_link)) {
-//                        echo '<li class="active">';
-//                    } else {
-//                        echo '<li>';
-//                    } ?>
-<!--                    <a href="--><?php //echo site_url('user_config') ?><!--">--><?php //echo $this->lang->line('Configure'); ?><!--</a>-->
-<!--                    </li>-->
-<!--                    <li class="pull-right"><a-->
-<!--                            href="--><?php //echo site_url('login/logout') ?><!--">--><?php //echo $this->lang->line('Logout'); ?><!--</a>-->
-<!--                    </li>-->
-<!--                </ul>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </nav>-->
-<!--</div>-->
-
 <div id='header'>
     <table border=0 width=100% cellspacing=0 style='margin-left:5px'>
         <tr>
@@ -74,14 +7,14 @@
                     <tr>
                         <td >
                             <div class='menu'>
-                                <input type='button' class='menuBtn'  value='Home' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Preference' onmousedown=execute(String(''),this)>
+                                <input type='button' class='menuBtn'  value='Home' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'">
+                                <input type='button' class='menuBtn'  value='Preference' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'">
                                 <input type='button' class='menuBtn'  value='New Patient' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/create'">
-                                <input type='button' class='menuBtn'  value='Search' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Pharmacy' onmousedown=execute(String(''),this)>
+                                <input type='button' class='menuBtn'  value='Search' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/search'">
+                                <input type='button' class='menuBtn'  value='Pharmacy' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_prescription'">
                                 <input type='button' class='menuBtn'  value='Laboratory' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Procedure Room' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Wards' onmousedown=execute(String(''),this)>
+                                <input type='button' class='menuBtn'  value='Wards' onclick="javascript:location.href='<?php echo base_url() ?>index.php/wards/search'">
                                 <input type='button' class='menuBtn'  value='Reports' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Notifications' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Messages' onmousedown=execute(String(''),this)>

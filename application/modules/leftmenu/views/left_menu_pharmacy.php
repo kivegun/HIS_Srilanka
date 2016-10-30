@@ -1,68 +1,25 @@
-<?php
-if (!defined('BASEPATH')) {
-    exit('No direct script access allowed');
-}
-//print_r($user_menu);
-// $mdsPermission = MDSPermission::GetInstance();
-$menu = "";
-$menu .= "<div id='left-sidebar1' style='position:fixed1;'>\n";
-$menu .= "<div class='list-group'>";
-$menu .= "<a href='' class='list-group-item active'>";
-$menu .= "Departments";
-$menu .= "</a>";
-$menu .= "<a href='" . base_url() . "index.php/pharmacy/show_list/OPD' class='list-group-item'>OPD Pharmacy</a>";
-if ($this->config->item('purpose') !="PP"){
-	$menu .= "<a href='" . base_url() . "index.php/pharmacy/show_list/CLN' class='list-group-item'>Clinic Pharmacy</a>";
-}
-//$menu .= "<a href='" . base_url() . "index.php/pharmacy' class='list-group-item'>InPatient</a>";
-$menu .= "</div>";
-
-$menu .= "<div class='list-group'>";
-$menu .= "<a href='' class='list-group-item active'>";
-$menu .= "Reports";
-$menu .= "</a>";
-
-// daily drugs dispensed
-$menu .= "<a class='list-group-item' data-toggle=\"modal\" href=\"" . site_url(
-        "report/pdf/pharmacyBalance/view"
-    ) . "\" data-target=\"#daily\">Daily drugs dispensed</a>";
-
-// current stock balance
-$menu .= "<a class='list-group-item' data-toggle=\"modal\" href=\"" . site_url(
-        "report/pdf/pharmacyCurrentStock/view"
-    ) . "\" data-target=\"#current-stock\">Current stock balance</a>";
-/**
-$menu .= "<a class='list-group-item' onclick=\"openWindow('" . site_url(
-        "report/pdf/pharmacyCurrentStock/print"
-    ) . "')\" href='#'>Current stock balance</a>";
- **/
-
-//create drug order
-$menu .= "<a class='list-group-item' data-toggle=\"modal\" href=\"" . site_url(
-        "report/pdf/drugOrder/view"
-    ) . "\" data-target=\"#order\">Create drug order</a>";
-
-// prescriptions
-$menu .= "<a class='list-group-item' data-toggle=\"modal\" href=\"" . site_url(
-    "report/pdf/prescriptions/view"
-) . "\" data-target=\"#prescription\">Prescriptions</a>";
-
-// prescription by drug
-$menu .= "<a class='list-group-item' data-toggle=\"modal\" href=\"" . site_url(
-        "report/pdf/prescriptionsByDrug/view"
-    ) . "\" data-target=\"#prescription-by-drug\">Prescription by Drug</a>";
-
-$menu .= "</div>";
-
-$menu .= "<div class='list-group'>";
-$menu .= "<a href='' class='list-group-item active'>";
-$menu .= "Maintain";
-$menu .= "</a>";
-$menu .= "<a href='" . base_url() . "index.php/preference/load/who_drug' class='list-group-item'>Drugs</a>";
-$menu .= "</div>";
-
-$menu .= " </div> \n";
-
-echo $menu
-?>
-
+<div id='left-sidebar'>
+    <div class='basic' style='float:left;'  id='list1'>
+        <a class='LeftMenuItem' href='#'>Departments</a>
+        <div>
+            <input type='button' class='submenuBtn' value='OPD Pharmacy'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_prescription'" >
+            <input type='button' class='submenuBtn' value='Clinic Pharmacy'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_prescription/clinic_prescription'" >
+            <input type='button' class='submenuBtn' value='InPatient' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_prescription/inpatient_prescription'" >
+            <input type='button' class='submenuBtn' value='OPD Pharmacy Screen'  onclick="window.open('patient_prescription/pharmacy_screen','_blank','toolbar=0,location=0,menubar=0')"  >
+        </div>
+        <a class='LeftMenuItem' href=''>Reports</a>
+        <div>
+            <input type='button' class='submenuBtn' value='Daily drugs dispensed' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/complaints'"  >
+            <input type='button' class='submenuBtn' value='Daily drugs dispensed (Me)' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/treatment'" >
+            <input type='button' class='submenuBtn' value='Daily OS Drugs' onclick=loadDataTable('','')>
+            <input type='button' class='submenuBtn' value='Current stock balance' onclick="javascript:location.href='<?php echo base_url() ?>index.php/my_drug'" >
+            <input type='button' class='submenuBtn' value='Create drug order' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/drugs_dosage'" >
+            <input type='button' class='submenuBtn' value='Prescriptions' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/drugs_frequency'" >
+            <input type='button' class='submenuBtn' value='Prescription by Drug' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/canned_text'" >
+        </div>
+        <a class='LeftMenuItem' href=''>Maintain</a>
+        <div>
+            <input type='button' class='submenuBtn' value='Drugs' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/snomed_findings'" >
+        </div>
+    </div>
+</div>

@@ -1,6 +1,9 @@
-<div class="row">
-    <div class="panel-body">
-        <div id="tablecont1"></div>
-        <?php echo $pager; ?>
-    </div>
+<div class="content">
+    <div id="mdsHead" class="mdshead">Patient search</div>
 </div>
+</article>
+<div id="tablecont1" style="width:95%;margin:0 auto;" class="">
+</div>
+<?php echo $pager; ?>
+</body>
+</html>

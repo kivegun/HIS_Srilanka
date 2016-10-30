@@ -891,7 +891,7 @@ function ajaxLookUp(obj){
     if (key =='') return false;
     if (key.length <3)return false;
     $.ajax({
-        url : "include/lookup/ajaxlookup_patient.php",
+        url : "ajaxlookup_patient",
         data :({ "Full_Name_Registered" : key }),
         global : false,
         type : "POST",

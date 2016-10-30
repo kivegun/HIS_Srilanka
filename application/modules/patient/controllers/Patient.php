@@ -33,7 +33,6 @@ class Patient extends FormController
         $data['default_gender'] = '';
         $data['default_civil_status'] = '';
         $data['default_date_of_birth'] = '';
-        $data['default_occupation'] = '';
         $data['default_nic'] = '';
         $data['default_telephone'] = '';
         $data['default_address_1'] = '';
@@ -41,12 +40,17 @@ class Patient extends FormController
         $data['default_village'] = '';
         $data['default_remarks'] = '';
 
-        $data['default_district'] = '55';
-        $data['dropdown_district'] = $this->get_district(4, 'return');
-        $data['default_province'] = '4';
-        $data['dropdown_provinces'] = $this->get_dsdivision('result');
-        $data['default_health_unit'] = '499';
-        $data['dropdown_health_unit'] = $this->get_gndivision(55, 'return');
+        $data['default_create_date'] = date("Y-m-d H:i:s");
+        $data['default_create_user'] = 'a';
+        $data['default_last_update'] = '';
+        $data['default_last_update_user'] = '';
+
+//        $data['default_district'] = '55';
+//        $data['dropdown_district'] = $this->get_district(4, 'return');
+//        $data['default_province'] = '4';
+//        $data['dropdown_provinces'] = $this->get_dsdivision('result');
+//        $data['default_health_unit'] = '499';
+//        $data['dropdown_health_unit'] = $this->get_gndivision(55, 'return');
         $this->set_common_validation();
 
 
@@ -61,7 +65,6 @@ class Patient extends FormController
                 'Gender' => $this->input->post('gender'),
                 'Personal_Civil_Status' => $this->input->post('civil_status'),
                 'DateOfBirth' => $this->input->post('date_of_birth'),
-                'Occupation' => $this->input->post('occupation'),
                 'NIC' => $this->input->post('nic'),
                 'Telephone' => $this->input->post('telephone'),
                 'Address_Street' => $this->input->post('address_1'),
@@ -70,27 +73,28 @@ class Patient extends FormController
                 'Remarks' => $this->input->post('remarks'),
             );
             $this->m_patient->insert($data);
+            //redirect
             $this->session->set_flashdata(
-                'msg', 'Created'
+                'msg', 'created'
             );
-            $this->redirect_if_no_continue('patient/search');
+            $this->redirect_if_no_continue('/patient/search');
+        }
     }
 
-    private function set_common_validation($id = 0)
+    private function set_common_validation()
     {
         $this->form_validation->set_rules('title', 'Title', 'trim|xss_clean');
-        $this->form_validation->set_rules('name', 'Name', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
         $this->form_validation->set_rules('other_name', 'Other Name', 'trim|xss_clean');
         $this->form_validation->set_rules('clinic_number', 'Clinic Number', 'trim|xss_clean');
-        $this->form_validation->set_rules('gender', 'Gender', 'trim|required|xss_clean');
+        $this->form_validation->set_rules('gender', 'Gender', 'trim|xss_clean|required');
         $this->form_validation->set_rules('civil_status', 'Civil Status', 'trim|xss_clean');
-        $this->form_validation->set_rules('date_of_birth', 'Date Of Birth', 'trim|xss_clean');
-        $this->form_validation->set_rules('occupation', 'Occupation', 'trim|xss_clean');
+        $this->form_validation->set_rules('date_of_birth', 'Date Of Birth', 'trim|xss_clean|required');
         $this->form_validation->set_rules('nic', 'NIC', 'trim|xss_clean');
         $this->form_validation->set_rules('telephone', 'Telephone', 'trim|xss_clean');
-        $this->form_validation->set_rules('address_1', 'Address 1', 'trim|xss_clean');
+        $this->form_validation->set_rules('address_1', 'Address 1', 'trim|xss_clean|required');
         $this->form_validation->set_rules('address_2', 'Address 2', 'trim|xss_clean');
-        $this->form_validation->set_rules('village', 'Village', 'trim|xss_clean');
+        $this->form_validation->set_rules('Address_Village', 'Village', 'trim|xss_clean|required');
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean');
 
         }
@@ -109,7 +113,7 @@ class Patient extends FormController
 //        }
 
 
-    }
+//    }
 
 //    private function insert()
 //    {
@@ -187,51 +191,51 @@ class Patient extends FormController
 
 
 
-    public function edit($id)
-    {
-        if (!Modules::run('permission/check_permission', 'patient', 'edit')) {
-            die('You do not have permission');
-        }
-        $patient = $this->m_patient->get($id);
-        if (empty($patient))
-            die('Id not exist');
-        $data['id'] = $id;
-        $data['default_title'] = $patient->Personal_Title;
-        $data['default_name'] = $patient->Name;
-        $data['default_other_name'] = $patient->OtherName;
-        $data['default_gender'] = $patient->Gender;
-        $data['default_civil_status'] = $patient->Personal_Civil_Status;
-        $data['default_date_of_birth'] = $patient->DateOfBirth;
-        $data['default_bi_id'] = $patient->BI_ID;
-        $data['default_bi_id_checked'] = empty($patient->BI_ID);
-        $data['default_nuit_id'] = $patient->NUIT_ID;
-        $data['default_nuit_id_checked'] = empty($patient->NUIT_ID);
-        $data['default_telephone'] = $patient->Telephone;
-        $data['default_address'] = $patient->Address_Street;
-        $data['default_remarks'] = $patient->Remarks;
-
-        $data['default_province'] = $patient->who_province_id;
-        $data['dropdown_provinces'] = $this->get_dropdown_provinces('result');
-        $data['default_district'] = $patient->who_district_id;
-        if ($patient->who_province_id) {
-            $data['dropdown_district'] = $this->get_district($patient->who_province_id, 'return');
-        } else {
-            $data['dropdown_district'] = array();
-        }
-        $data['default_health_unit'] = $patient->who_health_unit_id;
-        if ($patient->who_health_unit_id) {
-            $data['dropdown_health_unit'] = $this->get_health_unit($patient->who_district_id, 'return');
-        } else {
-            $data['dropdown_health_unit'] = array();
-        }
-
-        $this->set_common_validation($id);
-        if ($this->form_validation->run($this) == FALSE) {
-            $this->load_form($data);
-        } else {
-            $this->update($id);
-        }
-    }
+//    public function edit($id)
+//    {
+//        if (!Modules::run('permission/check_permission', 'patient', 'edit')) {
+//            die('You do not have permission');
+//        }
+//        $patient = $this->m_patient->get($id);
+//        if (empty($patient))
+//            die('Id not exist');
+//        $data['id'] = $id;
+//        $data['default_title'] = $patient->Personal_Title;
+//        $data['default_name'] = $patient->Name;
+//        $data['default_other_name'] = $patient->OtherName;
+//        $data['default_gender'] = $patient->Gender;
+//        $data['default_civil_status'] = $patient->Personal_Civil_Status;
+//        $data['default_date_of_birth'] = $patient->DateOfBirth;
+//        $data['default_bi_id'] = $patient->BI_ID;
+//        $data['default_bi_id_checked'] = empty($patient->BI_ID);
+//        $data['default_nuit_id'] = $patient->NUIT_ID;
+//        $data['default_nuit_id_checked'] = empty($patient->NUIT_ID);
+//        $data['default_telephone'] = $patient->Telephone;
+//        $data['default_address'] = $patient->Address_Street;
+//        $data['default_remarks'] = $patient->Remarks;
+//
+//        $data['default_province'] = $patient->who_province_id;
+//        $data['dropdown_provinces'] = $this->get_dropdown_provinces('result');
+//        $data['default_district'] = $patient->who_district_id;
+//        if ($patient->who_province_id) {
+//            $data['dropdown_district'] = $this->get_district($patient->who_province_id, 'return');
+//        } else {
+//            $data['dropdown_district'] = array();
+//        }
+//        $data['default_health_unit'] = $patient->who_health_unit_id;
+//        if ($patient->who_health_unit_id) {
+//            $data['dropdown_health_unit'] = $this->get_health_unit($patient->who_district_id, 'return');
+//        } else {
+//            $data['dropdown_health_unit'] = array();
+//        }
+//
+//        $this->set_common_validation($id);
+//        if ($this->form_validation->run($this) == FALSE) {
+//            $this->load_form($data);
+//        } else {
+//            $this->update($id);
+//        }
+//    }
 
     private function update($id)
     {
@@ -819,36 +823,28 @@ class Patient extends FormController
         $this->load->model('mpager');
         $pager2 = $this->mpager;
         $pager2->setSql(
-            "select PID, Name, OtherName, DateOfBirth, Occupation, Gender, Personal_Civil_Status, BI_ID, NUIT_ID, Address_Street from patient "
+            "select LPID,PID, Full_Name_Registered, Personal_Used_Name, DateOfBirth, Gender, Personal_Civil_Status, NIC, Address_Village from patient "
         );
+
         $pager2->setDivId('tablecont1'); //important
-        $pager2->setDivStyle('width:100%;margin:0 auto;');
+        $pager2->setDivStyle('width:95%;margin:0 auto;');
         $pager2->setRowid('PID');
 //        $pager2->setWidth("95%");
-        $tools = "";
+        $tools = "<input class=\'formButton\' type=\'button\' ID=\'spid\' value=\'Search Patient by ID\'>";
         $pager2->setCaption($tools);
-        $pager2->setSortname("CreateDate");
-        $pager2->setColNames(
-            array("ID", lang("Name"), lang("Other Name"), lang("Date of Birth"), "Occupation", lang("Gender"), lang("Civil Status"), lang("BI ID"), lang("NUIT ID"), lang("Address"))
-        );
-        $pager2->setColOption("PID", array("search" => true, "hidden" => false, "height" => 100, "width" => 50));
-        $pager2->setColOption("Name", array("search" => true, "width" => 200));
-        $pager2->setColOption("OtherName", array("search" => true, "width" => 200));
-        $pager2->setColOption("DateOfBirth", $pager2->getDateSelector());
-        $pager2->setColOption(
-            "Gender", array("stype" => "select", "searchoptions" => array("value" => ":All;Male:Male;Female:Female"))
-        );
+        //$pager->setSortname("CreateDate");
+        $pager2->setColNames(array("Id","PId","Name","Initials","Date of Birth", "Gender","Civil Status","NIC","Village"));
+        $pager2->setColOption("PID", array("search"=>true,"hidden" => true,"height"=>100));
+        $pager2->setColOption("LPID", array("search"=>true,"width"=>50));
+        $pager2->setColOption("Full_Name_Registered", array("search"=>true,"width"=>300));
+        $pager2->setColOption("Personal_Used_Name", array("search"=>true,"width"=>50));
+        //$pager2->setColOption("DateOfBirth", array("stype" => "text", "searchoptions" => array("dataInit_JS" => "datePicker_REFID","defaultValue"=>"")));
+        $pager2->setColOption("Gender", array("stype" => "select", "searchoptions" => array("value" => ":All;Male:Male;Female:Female")));
         //"Single","Married","Divorced","Widow","UnKnown"
-        $pager2->setColOption(
-            "Personal_Civil_Status", array("stype" => "select",
-                "searchoptions" => array("value" => ":All;Single:Single;Married:Married;Divorced:Divorced;Widow:Widow;UnKnown:UnKnown",
-                    "defaultValue" => "All"))
-        );
+        $pager2->setColOption("Personal_Civil_Status", array("stype" => "select", "searchoptions" => array("value" => ":All;Single:Single;Married:Married;Divorced:Divorced;Widow:Widow;UnKnown:UnKnown","defaultValue"=>"All")));
         //$pager2->setColOption("CreateDate", array("stype" => "text", "searchoptions" => array("dataInit_JS" => "datePicker_REFID","defaultValue"=>"")));
-        $pager2->setSortname('PID');
-        $pager2->gridComplete_JS
-            = "function() {
-
+        $pager2->setSortname('LPID');
+        $pager2->gridComplete_JS = "function() {
             var c = null;
             $('.jqgrow').mouseover(function(e) {
                 var rowId = $(this).attr('id');
@@ -858,14 +854,60 @@ class Patient extends FormController
             $(this).css('background',c);
             }).mousedown(function(e){
                 var rowId = $(this).attr('id');
-                window.location='" . base_url() . "index.php/patient/view/'+rowId;
+                window.location='home.php?page=patient&action=View&PID='+rowId;
             });
-                
-            }
-            ";
+                $('#spid').click(function(){
+                   getSearchText('patient');
+                })
+            }";
+
         $pager2->setOrientation_EL("L");
         $data['pager'] = $pager2->render(false);
         $this->qch_template->load_form_layout('patient_search', $data);
+
+//        $pager2->setDivId('tablecont1'); //important
+//        $pager2->setDivStyle('width:100%;margin:0 auto;');
+//        $pager2->setRowid('PID');
+////        $pager2->setWidth("95%");
+//        $tools = "";
+//        $pager2->setCaption($tools);
+//        $pager2->setSortname("CreateDate");
+//        $pager2->setColNames(
+//            array("ID", lang("Name"), lang("Other Name"), lang("Date of Birth"), "Occupation", lang("Gender"), lang("Civil Status"), lang("BI ID"), lang("NUIT ID"), lang("Address"))
+//        );
+//        $pager2->setColOption("PID", array("search" => true, "hidden" => false, "height" => 100, "width" => 50));
+//        $pager2->setColOption("Name", array("search" => true, "width" => 200));
+//        $pager2->setColOption("OtherName", array("search" => true, "width" => 200));
+//        $pager2->setColOption("DateOfBirth", $pager2->getDateSelector());
+//        $pager2->setColOption(
+//            "Gender", array("stype" => "select", "searchoptions" => array("value" => ":All;Male:Male;Female:Female"))
+//        );
+//        //"Single","Married","Divorced","Widow","UnKnown"
+//        $pager2->setColOption(
+//            "Personal_Civil_Status", array("stype" => "select",
+//                "searchoptions" => array("value" => ":All;Single:Single;Married:Married;Divorced:Divorced;Widow:Widow;UnKnown:UnKnown",
+//                    "defaultValue" => "All"))
+//        );
+//        //$pager2->setColOption("CreateDate", array("stype" => "text", "searchoptions" => array("dataInit_JS" => "datePicker_REFID","defaultValue"=>"")));
+//        $pager2->setSortname('PID');
+//        $pager2->gridComplete_JS
+//            = "function() {
+//
+//            var c = null;
+//            $('.jqgrow').mouseover(function(e) {
+//                var rowId = $(this).attr('id');
+//                c = $(this).css('background');
+//                $(this).css({'background':'#FFFFFF','cursor':'pointer'});
+//            }).mouseout(function(e){
+//            $(this).css('background',c);
+//            }).mousedown(function(e){
+//                var rowId = $(this).attr('id');
+//                window.location='" . base_url() . "index.php/patient/view/'+rowId;
+//            });
+//
+//            }
+//            ";
+
     }
 
     public
@@ -1130,6 +1172,53 @@ class Patient extends FormController
         return $this->mpersistent->get_value("Gender");
     }
 
+    public function ajaxlookup_patient(){
+
+//        require '../class/MDSPatient.php';
+//        require '../class/MDSDataBase.php';
+//        require '../config.php';
+        if (!$_POST) die ("POST ERROR");
+        $Full_Name_Registered = $_POST["Full_Name_Registered"];
+
+
+        $sql =" SELECT PID, Personal_Title,DateOfBirth,Personal_Used_Name,Gender,Full_Name_Registered,NIC,Address_Village FROM patient  where  ";
+        $sql .=" ( Full_Name_Registered like '$Full_Name_Registered%') ";
+        $sql .=" order by Full_Name_Registered limit 0,50";
+
+        $result = $this->db->query($sql);
+        $i = 0;
+        $out  = "PATdata ={ 'patient':[";
+
+
+
+        foreach ( $result->result_array() as $row )  {
+
+//            function mysqlFetchArray($result) {
+//                Return @mysqli_fetch_array($result, MYSQLI_BOTH);
+//            }
+
+
+            $this->m_patient->get($row["PID"]);
+
+            $out .="{'PID':'".$row["PID"]."', 
+                        'Full_Name_Registered':'".$row["Full_Name_Registered"]."',
+                        'NIC':'".$row["NIC"]."',
+                        'Address_Village':'".$row["Address_Village"]."',
+                        'Personal_Title':'".$row["Personal_Title"]."',
+                        'Personal_Used_Name':'".$row["Personal_Used_Name"]."',
+                        'Gender':'".$row["Gender"]."',
+                        'DateOfBirth':'".$row["DateOfBirth"]."'
+                        },";
+            $i++;
+        }
+        if ($i>0){
+            $out = substr_replace( $out, "", -1 );
+        }
+        $out  .= "]}";
+        $this->db->close();
+        echo $out;
+    }
+
     private function show_form($data)
     {
         $this->load->vars($data);
@@ -1213,6 +1302,8 @@ class Patient extends FormController
         $attach_page->setOrientation_EL("L");
         return $attach_page->render(false);
     }
+
+
 }
 
 
