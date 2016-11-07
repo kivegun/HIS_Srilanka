@@ -761,6 +761,17 @@ if ( ! function_exists('set_checkbox'))
 	 * @param	bool
 	 * @return	string
 	 */
+    function check_abc($checked_value, $id){
+
+        if (strpos($checked_value, $id) || strpos($checked_value, $id) === 0)
+        {
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+
 	function set_checkbox($field, $value = '', $default = FALSE)
 	{
 		$CI =& get_instance();

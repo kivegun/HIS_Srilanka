@@ -1,11 +1,6 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: manhdx
- * Date: 11/19/15
- * Time: 10:59 AM
- */
+
 class Permission extends LoginCheckController
 {
     public function __construct()

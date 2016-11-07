@@ -234,13 +234,14 @@ class MY_Form extends FormController
     public function password($label = '', $name = '', $default_value = '', $place_holder = '')
     {
         $data_label = array(
-            'class' => 'col-sm-2 control-label',
+            'class' => 'caption',
         );
         $data_text = array(
             'class' => 'form-control input-sm',
             'name' => $name,
             'id' => $name,
-            'placeholder' => $place_holder
+            'placeholder' => $place_holder,
+            'style' => 'width:200px'
         );
         echo '<div class="form-group">';
         echo form_label($label, $name, $data_label);
@@ -307,6 +308,33 @@ class MY_Form extends FormController
         echo '</div>';
         echo '</div>';
     }
+
+    public function usergroup_checkboxes($label = '', $name = '', $options = array(), $checked_value = '', $val)
+    {
+        $data_label = array(
+            'class' => 'caption'
+        );
+        $data_checkbox = array(
+            'name' => $name . '[]',
+        );
+        echo '<div id="fcUserGroup" class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo '<div>';
+        echo '<input type="hidden" class="input" id="UserGroup" name="UserGroup" value="'. $val .'">';
+        foreach ($options as $id => $value) {
+            echo '<label>';
+            echo form_checkbox($data_checkbox, $id, set_checkbox($name, $id, check_abc($checked_value, $id)), 'onclick="updateUG(this)"');
+            echo $value;
+            echo '</label>';
+        }
+        echo '</div>';
+        echo '<lable id="hUserGroup" class="fieldHelp" style="visibility: hidden;">User group</lable>';
+        echo form_error($name);
+        echo '</div>';
+
+    }
+
+
 
     public function button_submit_reset($id = '')
     {

@@ -29,8 +29,8 @@
         <div>
             <input type='button' class='submenuBtn' value='SNOMED Findings' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/snomed_findings'" >
             <input type='button' class='submenuBtn' value='SNOMED Disorders' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/disorders'" >
-            <input type='button' class='submenuBtn' value='SNOMED Events' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/events'" >
-            <input type='button' class='submenuBtn' value='SNOMED Procedures' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/procedures'" >
+            <input type='button' class='submenuBtn' value='SNOMED Events' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/snomed_events'" >
+            <input type='button' class='submenuBtn' value='SNOMED Procedures' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/snomed_procedures'" >
             <input type='button' class='submenuBtn' value='ICD 10' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/icd10'" >
             <input type='button' class='submenuBtn' value='IMMR' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/immr'" >
             <input type='button' class='submenuBtn' value='Village' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/village'" >

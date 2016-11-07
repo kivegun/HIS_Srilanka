@@ -36,7 +36,7 @@ $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/user_menu";
 //pager starts
 $form["CAPTION"]  = "User Menus <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('/top_menu/create')."\' value=\'Add new menu\'>";
-$form["ACTION"]  = base_url()."index.php/user_menu/edit/";
+$form["ACTION"]  = base_url()."index.php/top_menu/edit/";
 $form["ROW_ID"]="UMID";
 $form["COLUMN_MODEL"] = array(
     'UMID'=>array("width"=>"35px"),

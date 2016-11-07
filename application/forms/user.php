@@ -8,7 +8,7 @@ $form ["FORM_CAPTION"] = "User";
 $form ["SAVE"] = "user/save";  //save URI
 $form ["NEXT"] = "preference/load/user";
 // pager starts
-$form ["CAPTION"] = "Users";
+$form ["CAPTION"] = "Users <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('user/create')."\' value=\'Add new User/Staff\'><input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('treatments/create')."\' value=\'User post\'><input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('treatments/create')."\' value=\'User speciality\'>";
 $form ["ACTION"] = base_url () . "index.php/user/edit/";
 $form ["ROW_ID"] = "UID";
 $form ["COLUMN_MODEL"] = array (

@@ -28,17 +28,17 @@ URL: http: www.hhims.org
 
 ////////Configuration for patient form
 $form = array();
-$form["OBJID"] = "EVENTID";
-$form["TABLE"] = "event";
-$form["FORM_CAPTION"] = "Events";
+$form["OBJID"] = "PROCEDUREID";
+$form["TABLE"] = "procedures";
+$form["FORM_CAPTION"] = "Procedures";
 $form["SAVE"] = "";
-$form["NEXT"]  = "preference/load/events";
+$form["NEXT"]  = "preference/load/procedures";
 //pager starts
-$form["CAPTION"]  = "Events";
-$form["ACTION"]  = base_url()."index.php/event/edit/";
-$form["ROW_ID"]="EVENTID";
+$form["CAPTION"]  = "Procedures";
+$form["ACTION"]  = base_url()."index.php/snomed_procedures/edit/";
+$form["ROW_ID"]="PROCEDUREID";
 $form ["COLUMN_MODEL"] = array (
-    'EVENTID' => array (
+    'PROCEDUREID' => array (
         "width" => "35px"
     ),
     'CONCEPTID',
@@ -46,7 +46,7 @@ $form ["COLUMN_MODEL"] = array (
 );
 $form ["ORIENT"] = "L";
 $form ["LIST"] = array (
-    'EVENTID',
+    'PROCEDUREID',
     'CONCEPTID',
     'TERM',
 );

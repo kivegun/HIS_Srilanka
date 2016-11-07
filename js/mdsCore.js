@@ -84,8 +84,8 @@ function getCookie(c_name) {
 }
 function changePassword(uid) {
     var params = "menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=500,height=200"
-    var url = "cpwd.php?UID=" + uid;
-    var pwdW = window.open("include/" + url + "", "pwdW1", params);
+    var url = "http://203.241.251.224/HIS_Srilanka/index.php/user/change_password/" + uid;
+    var pwdW = window.open(url, "pwdW1", params);
 }
 function popup(link) {
     var params = "menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=500,height=200"
