@@ -61,15 +61,18 @@ class Patient extends FormController
                 'Personal_Title' => $this->input->post('title'),
                 'Full_Name_Registered' => $this->input->post('name'),
                 'Personal_Used_Name' => $this->input->post('other_name'),
-                'ClinicNo' => $this->input->post('gender'),
+                'ClinicNo' => $this->input->post('clinic_number'),
                 'Gender' => $this->input->post('gender'),
                 'Personal_Civil_Status' => $this->input->post('civil_status'),
                 'DateOfBirth' => $this->input->post('date_of_birth'),
-                'NIC' => $this->input->post('nic'),
+                'NIC' => $this->input->post('NIC'),
                 'Telephone' => $this->input->post('telephone'),
                 'Address_Street' => $this->input->post('address_1'),
                 'Address_Street1' => $this->input->post('address_2'),
-                'Address_Village' => $this->input->post('village'),
+                'Address_Village' => $this->input->post('Address_Village'),
+                'Address_DSDivision' => $this->input->post('Address_DSDivision'),
+                'Address_District' => $this->input->post('Address_District'),
+                'Active' => 0,
                 'Remarks' => $this->input->post('remarks'),
             );
             $this->m_patient->insert($data);
@@ -84,36 +87,83 @@ class Patient extends FormController
     private function set_common_validation()
     {
         $this->form_validation->set_rules('title', 'Title', 'trim|xss_clean');
-        $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required');
-        $this->form_validation->set_rules('other_name', 'Other Name', 'trim|xss_clean');
-        $this->form_validation->set_rules('clinic_number', 'Clinic Number', 'trim|xss_clean');
+        $this->form_validation->set_rules('name', 'Name', 'trim|xss_clean|required|callback_cleanName');
+        $this->form_validation->set_rules('other_name', 'Other Name', 'trim|xss_clean|callback_cleanName');
+        $this->form_validation->set_rules('clinic_number', 'Clinic Number', 'trim|xss_clean|callback_cleanAddress');
         $this->form_validation->set_rules('gender', 'Gender', 'trim|xss_clean|required');
         $this->form_validation->set_rules('civil_status', 'Civil Status', 'trim|xss_clean');
         $this->form_validation->set_rules('date_of_birth', 'Date Of Birth', 'trim|xss_clean|required');
-        $this->form_validation->set_rules('nic', 'NIC', 'trim|xss_clean');
-        $this->form_validation->set_rules('telephone', 'Telephone', 'trim|xss_clean');
-        $this->form_validation->set_rules('address_1', 'Address 1', 'trim|xss_clean|required');
-        $this->form_validation->set_rules('address_2', 'Address 2', 'trim|xss_clean');
-        $this->form_validation->set_rules('Address_Village', 'Village', 'trim|xss_clean|required');
-        $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean');
+        $this->form_validation->set_rules('NIC', 'NIC', 'trim|xss_clean|callback_checkNIC');
+        $this->form_validation->set_rules('telephone', 'Telephone', 'trim|xss_clean|callback_cleanNumber');
+        $this->form_validation->set_rules('address_1', 'Address 1', 'trim|xss_clean|required|callback_cleanAddress');
+        $this->form_validation->set_rules('address_2', 'Address 2', 'trim|xss_clean|callback_cleanAddress');
+        $this->form_validation->set_rules('Address_Village', 'Village', 'trim|xss_clean|required|callback_cleanName');
+        $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean|callback_cleanNumber');
 
-        }
-//        if ($this->input->post('bi_id_checkbox') && $this->input->post('nuit_id_checkbox')) {
-//            //patient do NOT have any kind of National ID card
-//            $this->form_validation->set_rules('address', 'Address', 'trim|required');
-////            $this->form_validation->set_rules('village', 'Village', 'trim|required');
-//            $this->form_validation->set_rules('bi_id', 'BI ID', 'trim');
-//            $this->form_validation->set_rules('nuit_id', 'NUIT ID', 'trim');
-//        } else {
-//            $this->form_validation->set_rules('address', 'Address', 'trim');
-////            $this->form_validation->set_rules('village', 'Village', 'trim');
-//            $this->form_validation->set_rules('bi_id', 'BI ID', 'trim');
-////            $this->form_validation->set_rules('nuit_id', 'NUIT ID', 'callback_check_name');
-//            $this->form_validation->set_rules('nuit_id', 'NUIT ID', 'trim|callback_check_national_id[' . $id . ']');
-//        }
+    }
 
+    public function sanitize($data){
+        require 'application/config/database.php';
+        $link = mysqli_connect($db['default']['hostname'], $db['default']['username'], $db['default']['password'], $db['default']['database']);
+        $data = trim($data);
+        $data = htmlspecialchars($data);
+        $data = mysqli_real_escape_string($link, $data);
+        $data = stripslashes($data);
+        return $data;
+    }
 
-//    }
+    public function cleanName($text){
+        require 'application/config/database.php';
+        $link = mysqli_connect($db['default']['hostname'], $db['default']['username'], $db['default']['password'], $db['default']['database']);
+        $text = preg_replace('/[\x00-\x1F\x7F\<\>\,\"\'\(\)\{\}\[\]\/\%\$\#\@\;\:\^\?\/\\\+\-\=\*\&0-9]/', '', $text);
+        $possible_injection = array("SCRIPT", "script", "ScRiPt","PHP","php","alert","eval","java","type","hello");
+        $replace   = array("", "", "","", "", "","");
+        $text = str_replace($possible_injection, $replace, $text);
+        $text = trim($text);
+        $text = htmlspecialchars($text);
+        $text = mysqli_real_escape_string($link, $text);
+        $text = stripslashes($text);
+        return $text;
+    }
+
+    public function cleanNumber($text){
+        require 'application/config/database.php';
+        $link = mysqli_connect($db['default']['hostname'], $db['default']['username'], $db['default']['password'], $db['default']['database']);
+        $text = preg_replace('/[\x00-\x1F\x7F\<\>\,\"\'\(\)\{\}\[\]\/\%\$\#\@\;\:\^\?\/\\\+\*\&]/', '', $text);
+        $possible_injection = array("SCRIPT", "script", "ScRiPt","PHP","php","alert","eval");
+        $replace   = array("", "", "","", "", "","");
+        $text = str_replace($possible_injection, $replace, $text);
+        $text = trim($text);
+        $text = htmlspecialchars($text);
+        $text = mysqli_real_escape_string($link, $text);
+        $text = stripslashes($text);
+        return $text;
+    }
+
+    public function cleanAddress($text){
+        require 'application/config/database.php';
+        $link = mysqli_connect($db['default']['hostname'], $db['default']['username'], $db['default']['password'], $db['default']['database']);
+        $text = preg_replace('/[\x00-\x1F\x7F\<\>\,\"\'\{\}\[\]\%\$\#\@\;\:\^\?\+\*\&]/', '', $text);
+        $possible_injection = array("SCRIPT", "script", "ScRiPt","PHP","php","alert","eval");
+        $replace   = array("", "", "","", "", "","");
+        $text = str_replace($possible_injection, $replace, $text);
+        $text = trim($text);
+        $text = htmlspecialchars($text);
+        $text = mysqli_real_escape_string($link, $text);
+        $text = stripslashes($text);
+        return $text;
+    }
+    public function checkNIC($nic)
+    {
+        $this->form_validation->set_message('checkNIC', 'The NIC is not valid');
+
+        return $nic === '' || (bool) preg_match('/^\d{9}[xXvV]$/', $nic);
+    }
+    public function checkDOB($dob){
+        $reg = '/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/';
+        return preg_match($reg,$dob);
+    }
+
 
 //    private function insert()
 //    {
@@ -191,29 +241,34 @@ class Patient extends FormController
 
 
 
-//    public function edit($id)
-//    {
+    public function edit($id)
+    {
 //        if (!Modules::run('permission/check_permission', 'patient', 'edit')) {
 //            die('You do not have permission');
 //        }
-//        $patient = $this->m_patient->get($id);
-//        if (empty($patient))
-//            die('Id not exist');
-//        $data['id'] = $id;
-//        $data['default_title'] = $patient->Personal_Title;
-//        $data['default_name'] = $patient->Name;
-//        $data['default_other_name'] = $patient->OtherName;
-//        $data['default_gender'] = $patient->Gender;
-//        $data['default_civil_status'] = $patient->Personal_Civil_Status;
-//        $data['default_date_of_birth'] = $patient->DateOfBirth;
-//        $data['default_bi_id'] = $patient->BI_ID;
-//        $data['default_bi_id_checked'] = empty($patient->BI_ID);
-//        $data['default_nuit_id'] = $patient->NUIT_ID;
-//        $data['default_nuit_id_checked'] = empty($patient->NUIT_ID);
-//        $data['default_telephone'] = $patient->Telephone;
-//        $data['default_address'] = $patient->Address_Street;
-//        $data['default_remarks'] = $patient->Remarks;
-//
+        $patient = $this->m_patient->get($id);
+        if (empty($patient))
+            die('Id not exist');
+        $data['id'] = $id;
+        $data['default_title'] = $patient->Personal_Title;
+        $data['default_name'] = $patient->Full_Name_Registered;
+        $data['default_other_name'] = $patient->Personal_Used_Name;
+        $data['default_clinic_number'] = $patient->ClinicNo;
+        $data['default_gender'] = $patient->Gender;
+        $data['default_civil_status'] = $patient->Personal_Civil_Status;
+        $data['default_date_of_birth'] = $patient->DateOfBirth;
+        $data['default_nic'] = $patient->NIC;
+        $data['default_telephone'] = $patient->Telephone;
+        $data['default_address_1'] = $patient->Address_Street;
+        $data['default_address_2'] = $patient->Address_Street1;
+        $data['default_village'] = $patient->Address_Village;
+        $data['default_remarks'] = $patient->Remarks;
+
+        $data['default_create_date'] = $patient->CreateDate;
+        $data['default_create_user'] = $patient->CreateUser;
+        $data['default_last_update'] = $patient->LastUpDate;
+        $data['default_last_update_user'] = $patient->LastUpDateUser;
+
 //        $data['default_province'] = $patient->who_province_id;
 //        $data['dropdown_provinces'] = $this->get_dropdown_provinces('result');
 //        $data['default_district'] = $patient->who_district_id;
@@ -228,41 +283,41 @@ class Patient extends FormController
 //        } else {
 //            $data['dropdown_health_unit'] = array();
 //        }
-//
-//        $this->set_common_validation($id);
-//        if ($this->form_validation->run($this) == FALSE) {
-//            $this->load_form($data);
-//        } else {
-//            $this->update($id);
-//        }
-//    }
+
+        $this->set_common_validation($id);
+        if ($this->form_validation->run($this) == FALSE) {
+            $this->load_form($data);
+        } else {
+            $this->update($id);
+        }
+    }
 
     private function update($id)
     {
-        if (!$this->input->post('bi_id_checkbox') && $this->input->post('bi_id') && strlen($this->input->post('bi_id')) > 0)
-            $bi_id = $this->input->post('bi_id');
-        else
-            $bi_id = NULL;
-        if (!$this->input->post('nuit_id_checkbox') && $this->input->post('nuit_id') && strlen($this->input->post('nuit_id')) > 0)
-            $nuit_id = $this->input->post('nuit_id');
-        else
-            $nuit_id = NULL;
+//        if (!$this->input->post('bi_id_checkbox') && $this->input->post('bi_id') && strlen($this->input->post('bi_id')) > 0)
+//            $bi_id = $this->input->post('bi_id');
+//        else
+//            $bi_id = NULL;
+//        if (!$this->input->post('nuit_id_checkbox') && $this->input->post('nuit_id') && strlen($this->input->post('nuit_id')) > 0)
+//            $nuit_id = $this->input->post('nuit_id');
+//        else
+//            $nuit_id = NULL;
         $data = array(
             'Personal_Title' => $this->input->post('title'),
-            'Name' => $this->input->post('name'),
-            'OtherName' => $this->input->post('other_name'),
+            'Full_Name_Registered' => $this->input->post('name'),
+            'Personal_Used_Name' => $this->input->post('other_name'),
+            'ClinicNo' => $this->input->post('clinic_number'),
             'Gender' => $this->input->post('gender'),
             'Personal_Civil_Status' => $this->input->post('civil_status'),
             'DateOfBirth' => $this->input->post('date_of_birth'),
-            'BI_ID' => $bi_id,
-            'NUIT_ID' => $nuit_id,
+            'NIC' => $this->input->post('NIC'),
             'Telephone' => $this->input->post('telephone'),
-            'Address_Street' => $this->input->post('address'),
-//            'Address_Village' => $this->input->post('village'),
+            'Address_Street' => $this->input->post('address_1'),
+            'Address_Street1' => $this->input->post('address_2'),
+            'Address_Village' => $this->input->post('Address_Village'),
+            'Address_DSDivision' => $this->input->post('Address_DSDivision'),
+            'Address_District' => $this->input->post('Address_District'),
             'Remarks' => $this->input->post('remarks'),
-            'who_province_id' => $this->input->post('province'),
-            'who_district_id' => $this->input->post('district'),
-            'who_health_unit_id' => $this->input->post('health_unit'),
         );
         $this->m_patient->update($id, $data);
 
@@ -356,18 +411,6 @@ class Patient extends FormController
     }
 
     public
-    function banner_full($pid)
-    {
-        $data["patient_info"] = $this->m_patient->as_array()->get($pid);
-        if (isset($data["patient_info"]["DateOfBirth"])) {
-            $data["patient_info"]["Age"] = $this->get_age($data["patient_info"]["DateOfBirth"]);
-        }
-
-        $this->load->vars($data);
-        $this->load->view('patient_banner_full');
-    }
-
-    public
     function get_previous_lab($pid, $continue, $mode = 'HTML')
     {
         $this->load->model("mpatient");
@@ -455,7 +498,7 @@ class Patient extends FormController
     function view($id = NULL)
     {
         $this->load->model('mpersistent');
-        $this->load->model('mquestionnaire');
+//        $this->load->model('mquestionnaire');
         $this->load->helper('file');
         $data["patient_info"] = $this->mpersistent->open_id($id, "patient", "PID");
 
@@ -467,23 +510,22 @@ class Patient extends FormController
         if (isset($data["patient_info"]["DateOfBirth"])) {
             $data["patient_info"]["Age"] = $this->get_age($data["patient_info"]["DateOfBirth"]);
         }
-        if (get_file_info('./attach/' . $data["patient_info"]["HIN"] . '/' . $data["patient_info"]["HIN"] . '_portrait.jpg')) {
-            $data["image"] = base_url() . 'attach/' . $data["patient_info"]["HIN"] . '/' . $data["patient_info"]["HIN"] . '_portrait.jpg';
-        } else {
-            $data["image"] = base_url() . '/images/patient.jpg';
-        }
+//        if (get_file_info('./attach/' . $data["patient_info"]["HIN"] . '/' . $data["patient_info"]["HIN"] . '_portrait.jpg')) {
+//            $data["image"] = base_url() . 'attach/' . $data["patient_info"]["HIN"] . '/' . $data["patient_info"]["HIN"] . '_portrait.jpg';
+//        } else {
+//            $data["image"] = base_url() . '/images/patient.jpg';
+//        }
         $data["id"] = $id;
 
-
-        $data["previous_emergency_visit"] = $this->previous_emergency_visit($id);
-        $data["previous_opd_visits"] = $this->previousVisits($id);
-        $data["admissions"] = $this->loadAdmission($id);
-        $data["exams"] = $this->loadExam($id);
-        $data['patient_history'] = $this->loadHistory($id);
-        $data["allergy"] = $this->loadAlergy($id);
-//        $data["lab_orders"] = $this->loadLabOrder($id);
-//        $data["prescriptions"] = $this->loadPrescription($id);
-        $data["notes"] = $this->loadNotes($id);
+//        $data["previous_emergency_visit"] = $this->previous_emergency_visit($id);
+//        $data["previous_opd_visits"] = $this->previousVisits($id);
+//        $data["admissions"] = $this->loadAdmission($id);
+//        $data["exams"] = $this->loadExam($id);
+//        $data['patient_history'] = $this->loadHistory($id);
+//        $data["allergy"] = $this->loadAlergy($id);
+////        $data["lab_orders"] = $this->loadLabOrder($id);
+////        $data["prescriptions"] = $this->loadPrescription($id);
+//        $data["notes"] = $this->loadNotes($id);
 
         $this->qch_template->load_form_layout('patient_view', $data);
     }
@@ -854,7 +896,7 @@ class Patient extends FormController
             $(this).css('background',c);
             }).mousedown(function(e){
                 var rowId = $(this).attr('id');
-                window.location='home.php?page=patient&action=View&PID='+rowId;
+                window.location='patient/view/'+rowId;
             });
                 $('#spid').click(function(){
                    getSearchText('patient');
@@ -1303,7 +1345,72 @@ class Patient extends FormController
         return $attach_page->render(false);
     }
 
+    public
+    function banner_full($pid)
+    {
+        $data["patient_info"] = $this->m_patient->as_array()->get($pid);
+        if (isset($data["patient_info"]["DateOfBirth"])) {
+            $data["patient_info"]["Age"] = $this->get_age($data["patient_info"]["DateOfBirth"]);
+        }
 
+        $this->load->vars($data);
+        $this->load->view('patient_banner_full');
+    }
+
+    public function checkID()
+    {
+        require 'application/config/database.php';
+        $id = isset($_POST['stext']) ? $_POST['stext'] : false;
+//        $id = (int)$this->input->post('stext');
+
+        $conn = mysqli_connect($db['default']['hostname'], $db['default']['username'], $db['default']['password'], $db['default']['database'])
+        or die ('{error:"bad_request"}');
+        $query = mysqli_query($conn, 'select count(*) as count from patient where PID = \"'.  addslashes($id).'"');
+
+        if (!$id){
+            die ('{error:"bad_request"}');
+        }
+
+        if ($query){
+            $row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+            if ((int)$row['count'] == 0){
+                echo -1;
+            }
+            else {
+                echo 1;
+            }
+        }
+
+//        if (!$id){
+//            echo -1;
+//            die(-1);
+//        }
+//
+//        if ($id)
+//        {
+//            $query = $this->m_patient->get($id);
+//
+//            if ($query){
+////                $row = mysqli_fetch_array($query, MYSQLI_ASSOC);
+//                if (mysqli_num_rows($query) == 0){
+//                    echo -2;
+////                    die(-2);
+//                }
+//                elseif (mysqli_num_rows($query) == 1){
+//                    echo 1;
+////                    die(1);
+//                }
+//                elseif (mysqli_num_rows($query) > 1){
+//                    echo -2;
+////                    die(-2);
+//                }
+//            }
+//            else{
+//                echo -1;
+//                die(-1);
+//            }
+//        }
+    }
 }
 
 

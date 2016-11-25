@@ -110,7 +110,7 @@ else{
 function sanitize($data){
         $data=trim($data);
         $data=htmlspecialchars($data);
-        $data = mysql_escape_string($data);
+        $data = mysqli_escape_string($data);
         $data = stripslashes($data);
         return $data;
 }

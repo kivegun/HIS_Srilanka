@@ -340,6 +340,8 @@ class MDSReporter extends FPDF
         return $w;
     }
 
+
+
     public function Write($h, $txt, $link = '')
     {
         //        $this->SetFont('arial','',10);

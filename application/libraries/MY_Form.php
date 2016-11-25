@@ -24,7 +24,17 @@ class MY_Form extends FormController
      */
     public function form_open_current_url()
     {
-        echo '<div id="MDSError" class="mdserror" style="display: block;">'.validation_errors().'</div>';
+        echo '<div id="MDSError" class="mdserror" style="display: none;" onload="error();">'.validation_errors().'</div>';
+        echo '<script type="text/javascript">';
+        echo 'function error(){';
+        echo 'var a = document.getElementById("MDSError");';
+        echo 'a.style.display = "block";';
+//        echo '    a.style.display="block" }';
+//        echo 'else {';
+//        echo '    a.style.display="none" }';
+        echo '}';
+        echo '</script>';
+
         $form_attributes = array(
             'class' => 'form-horizontal',
             'role' => 'form'
@@ -345,7 +355,7 @@ class MY_Form extends FormController
         echo '        <tbody>';
         echo '            <tr>';
         echo '                <td>';
-        echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save">Save</button>';
+        echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick="error();">Save</button>';
         echo '<button class="formButton" name="CancelBtn" id="CancelBtn" type="button" value="Cancel" onclick="window.history.back()">Cancel</button>';
         echo '                </td>';
         echo '            </tr>';

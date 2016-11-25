@@ -31,7 +31,7 @@
             ?>
     <div id="fcAddress_Village" class="fieldCont">
         <div class="caption">*Town / Village</div>
-        <input type="text" name="Address_Village" id="Address_Village" pos="11" class="input" style="width:450;" value="">
+        <input type="text" name="Address_Village" id="Address_Village" pos="11" class="input" style="width:450;" value="<?php echo $default_village; ?>">
         <img src="<?php echo base_url() ?>images/search.png" title="Search for village" valign="top" style="cursor:pointer;" onclick="openSearch('Village','Address_Village')">
         <lable id="hAddress_Village" class="fieldHelp" style="visibility: hidden;">Birth address: eg. Navatkudah</lable>
         <div id="placeDiv" title="Place lookup"></div>
@@ -42836,7 +42836,7 @@
                     var r=confirm('village not found. Do You Like to ADD VILLAGE ?');
                     if (r==true)
                     {
-                        window.location='home.php?page=preferences&mod=VillageNew';
+                        window.location='<?php echo base_url() ?>index.php/village/create';
                     }
                     else
                     {
@@ -42851,7 +42851,16 @@
         </script>
     </div>
             <?php
-            $form_generator->text_area('Remarks', 'remarks', $default_remarks, 'Any Remarks (Canned text enabled)');
+            $form_generator->text_area('Remarks', 'remarks', $default_remarks, 'Any Remarks (Canned text enabled)', 'onkeyup="getCannedText(this)"');
+            ?>
+    <div id="fcAddress_DSDivision" class="fieldCont">
+        <input name="Address_DSDivision" id="Address_DSDivision" type="hidden" value="">
+    </div>
+    <div id="fcAddress_District" class="fieldCont">
+        <input name="Address_District" id="Address_District" type="hidden" value="">
+    </div>
+            <?php
+
             $form_generator->date_created($default_create_date, $default_create_user, $default_last_update, $default_last_update_user);
             $form_generator->button_submit_reset();
             $form_generator->form_close();

@@ -34,7 +34,7 @@ $form["FORM_CAPTION"] = "Lab Tests";
 $form["SAVE"] = "";
 $form["NEXT"]  = "preference/load/lab_tests";
 //pager starts
-$form["CAPTION"]  = "Lab tests <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test/create_lab_test')."\' value=\'Add new LabTest\'><input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test/create_lab_test')."\' value=\'Add new Department\'><input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test/create_lab_test')."\' value=\'Add new Lab Group\'>";
+$form["CAPTION"]  = "Lab tests <input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test/create')."\' value=\'Add new LabTest\'><input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test_department/create')."\' value=\'Add new Department\'><input type=\'button\' class=\'btn btn-xs btn-success\' onclick=self.document.location=\'".site_url('lab_test_group/create')."\' value=\'Add new Lab Group\'>";
 $form["ACTION"]  = base_url()."index.php/lab_tests/edit_lab_test/";
 $form["ROW_ID"]="LABID";
 $form ["COLUMN_MODEL"] = array (

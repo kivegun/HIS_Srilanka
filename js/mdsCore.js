@@ -386,6 +386,11 @@ function updatePermission(obj, cbox) {
     permission += '"test":false}';
     $("#" + obj).val(permission);
 }
+function openWindow(url) {
+    var params = "menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=750,height=700";
+    window.open(url + "", "lookUpW",
+        params);
+}
 function printReport(id, type) {
     var params = "menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=750,height=700"
     var url = "";
@@ -1152,9 +1157,10 @@ function getSearchText(tbl) {
         '<div id="stextwin" title="MDS Search" style="background-color:#f9dfbc;"></div>')
     .appendTo('body');
     var html = "";
-    html += "<input class='input' placeholder='Eg.4453' type='text' autofocus id='stext' onkeyup=checkSearchText(event,this,'"
-    + tbl + "');>";
+    html += "<form method='post' action>";
+    html += "<input class='input' placeholder='Eg.4453' type='text' autofocus id='stext' name='stext' onkeyup=checkSearchText(event,this);>";
     html += "<div id='errmsg' >Type Patient ID and hit ENTER</div>";
+    html += "</form>";
     $("#stextwin").html(html);
     $("#stextwin").dialog({
         width : 250,
@@ -1164,26 +1170,26 @@ function getSearchText(tbl) {
         position : 'center'
     });
 }
-function checkSearchText(e, obj, tbl) {
+function checkSearchText(e, obj) {
     var reg = /[\<\>\.\'\"\:\;\|\{\}\[\]\,\=\+\-\_\!\~\`\(\)\$\#\@\^\&\,\?]/;
     if (String(obj.value).match(reg)) {
         obj.value = '';
     }
     if ((e.which == 13)) {
         var res = $.ajax({
-            url : "include/lookup/open.php?tbl=" + tbl + "&id=" + obj.value
-            + "",
+            url : "checkID",
             global : false,
             type : "POST",
             async : false
         }).responseText;
         if ((res == -2) || (res == -1)) {
-            $("#errmsg").html("Not Found! Try agin...").css({
+            $("#errmsg").html("Not Found! Try again...").css({
                 "color" : "#FF0000"
             });
         } else {
-            self.document.location = 'home.php?page=' + res;
+            self.document.location = 'view/' + obj.value;
         }
+        // self.document.location = 'view/' + res;
     }
 
 }

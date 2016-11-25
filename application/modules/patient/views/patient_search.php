@@ -5,5 +5,6 @@
 <div id="tablecont1" style="width:95%;margin:0 auto;" class="">
 </div>
 <?php echo $pager; ?>
+</form>
 </body>
 </html>

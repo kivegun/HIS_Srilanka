@@ -88,12 +88,12 @@ class Patient_Prescription extends FormController
 
     public function view($prescription_id)
     {
-        $this->load->model('m_who_drug');
-        $this->load->model('m_drug_dosage');
-        $this->load->model('m_drug_frequency');
+//        $this->load->model('m_who_drug');
+//        $this->load->model('m_drug_dosage');
+//        $this->load->model('m_drug_frequency');
 //        $patient_prescription = $this->m_patient_prescription->get($prescription_id);
 
-        $patient_prescription_have_drug = $this->m_patient_prescription_have_drug->get_many_by(array('PrescriptionID' => $prescription_id));
+//        $patient_prescription_have_drug = $this->m_patient_prescription_have_drug->get_many_by(array('PrescriptionID' => $prescription_id));
         $data['drug_list'] = array();
         foreach ($patient_prescription_have_drug as $raw_drug) {
             $tmp_data = array();
