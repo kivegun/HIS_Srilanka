@@ -97,7 +97,7 @@ class Patient extends FormController
         $this->form_validation->set_rules('telephone', 'Telephone', 'trim|xss_clean|callback_cleanNumber');
         $this->form_validation->set_rules('address_1', 'Address 1', 'trim|xss_clean|required|callback_cleanAddress');
         $this->form_validation->set_rules('address_2', 'Address 2', 'trim|xss_clean|callback_cleanAddress');
-        $this->form_validation->set_rules('Address_Village', 'Village', 'trim|xss_clean|required|callback_cleanName');
+        $this->form_validation->set_rules('Address_Village', 'Village', 'trim|xss_clean|required');
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean|callback_cleanNumber');
 
     }
@@ -123,6 +123,7 @@ class Patient extends FormController
         $text = htmlspecialchars($text);
         $text = mysqli_real_escape_string($link, $text);
         $text = stripslashes($text);
+        $text = strtoupper($text);
         return $text;
     }
 
@@ -286,7 +287,7 @@ class Patient extends FormController
 
         $this->set_common_validation($id);
         if ($this->form_validation->run($this) == FALSE) {
-            $this->load_form($data);
+            $this->render('form_patient_edit', $data);
         } else {
             $this->update($id);
         }
@@ -385,7 +386,7 @@ class Patient extends FormController
         if (isset($data["patient_info"]["DateOfBirth"])) {
             $data["patient_info"]["Age"] = $this->get_age($data["patient_info"]["DateOfBirth"]);
         }
-        $data["patient_info"]["HIN"] = $this->print_hin($data["patient_info"]["HIN"]);
+//        $data["patient_info"]["HIN"] = $this->print_hin($data["patient_info"]["HIN"]);
 
         $this->load->vars($data);
         $this->load->view('patient_banner');
@@ -1360,26 +1361,34 @@ class Patient extends FormController
     public function checkID()
     {
         require 'application/config/database.php';
-        $id = isset($_POST['stext']) ? $_POST['stext'] : false;
+        $id = isset($_POST['id']) ? $_POST['id'] : false;
 //        $id = (int)$this->input->post('stext');
 
         $conn = mysqli_connect($db['default']['hostname'], $db['default']['username'], $db['default']['password'], $db['default']['database'])
         or die ('{error:"bad_request"}');
         $query = mysqli_query($conn, 'select count(*) as count from patient where PID = \"'.  addslashes($id).'"');
 
+        $error = array(
+            'error' => 'Success'
+        );
+
         if (!$id){
+            $error['error'] = 'Not Found! Try again...';
             die ('{error:"bad_request"}');
         }
 
+//
         if ($query){
             $row = mysqli_fetch_array($query, MYSQLI_ASSOC);
             if ((int)$row['count'] == 0){
-                echo -1;
+                $error['error'] = 'Not Found! Try again...';
             }
-            else {
-                echo 1;
+            elseif ((int)$row['count'] > 1) {
+                $error['error'] = 'Not Found! Try again...';
             }
         }
+
+        die (json_encode($error));
 
 //        if (!$id){
 //            echo -1;

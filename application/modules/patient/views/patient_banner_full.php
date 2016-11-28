@@ -1,6 +1,6 @@
 <?php
 $tools= "<img  src='".base_url()."images/patient_edit.png' style='cursor:pointer;' title='Edit record'    
-        onmousedown=self.document.location='".base_url()."index.php/patient/edit/".$patient_info['PID']."'>";
+        onmousedown=\"self.document.location='".site_url()."/patient/edit/".$patient_info['PID']."/?CONTINUE=patient/view/".$patient_info['PID']."'\">";
 $tools .= "&nbsp;<img   src='".base_url()."images/patient_screen.png' style='cursor:pointer;' title='Open' onclick=openPatient('".$patient_info['PID']."')><br>";
 $patInfo = "";
 $patInfo .= "<div id ='patientBanner' class='patientBanner'>\n";

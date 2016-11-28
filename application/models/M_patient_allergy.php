@@ -8,7 +8,7 @@
 class m_patient_allergy extends MY_CRUD {
     public function __construct() {
         parent::__construct();
-        $this->_table = 'patient_allergy';
-        $this->primary_key = 'ALLERGYID';
+        $this->_table = 'patient_alergy';
+        $this->primary_key = 'ALERGYID';
     }
 }

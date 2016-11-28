@@ -1158,7 +1158,7 @@ function getSearchText(tbl) {
     .appendTo('body');
     var html = "";
     html += "<form method='post' action>";
-    html += "<input class='input' placeholder='Eg.4453' type='text' autofocus id='stext' name='stext' onkeyup=checkSearchText(event,this);>";
+    html += "<input class='input' placeholder='Eg.44531' type='text' autofocus id='id' name='id' onkeyup=checkSearchText(event,this);>";
     html += "<div id='errmsg' >Type Patient ID and hit ENTER</div>";
     html += "</form>";
     $("#stextwin").html(html);
@@ -1176,22 +1176,36 @@ function checkSearchText(e, obj) {
         obj.value = '';
     }
     if ((e.which == 13)) {
-        var res = $.ajax({
-            url : "checkID",
-            global : false,
-            type : "POST",
-            async : false
-        }).responseText;
-        if ((res == -2) || (res == -1)) {
-            $("#errmsg").html("Not Found! Try again...").css({
-                "color" : "#FF0000"
-            });
-        } else {
-            self.document.location = 'view/' + obj.value;
-        }
-        // self.document.location = 'view/' + res;
-    }
+        // var res =
+        $.ajax({
+            url: "checkID",
+            global: false,
+            type: "POST",
+            async: false,
+            data: {
+                id: id
+            },
+            success: function (result) {
+                if($.trim(result.error) != '' && $.trim(result.error) != 'Not Found! Try again...') {
+                    self.document.location = 'view/' + obj.value;
+                }
+                else {
+                    $('#errmsg').append(result.error);
+                    $('#errmsg').style = 'color: #FF0000';
+                    self.document.location = 'view/' + obj.value;
+                }
 
+                // if ((res == -2) || (res == -1)) {
+                //     $("#errmsg").html("Not Found! Try again...").css({
+                //         "color": "#FF0000"
+                //     });
+                // } else {
+                //     self.document.location = 'view/' + obj.value;
+                // }
+                // self.document.location = 'view/' + res;
+            }
+        });
+}
 }
 
 function printBarCode(type,id){
