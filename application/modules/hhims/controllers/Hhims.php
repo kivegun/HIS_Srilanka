@@ -11,6 +11,8 @@ class Hhims extends LoginCheckController
 
     public function index()
     {
+        var_dump($this->session->userdata('uid'));
+        var_dump($this->session->userdata('user_group_id'));
         $user_group = $this->m_user_group->get($this->session->userdata('user_group_id'));
         if (empty($user_group->MainMenu)) {
             die('Menu is not set');

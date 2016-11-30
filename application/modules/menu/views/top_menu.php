@@ -18,7 +18,7 @@
                                 <input type='button' class='menuBtn'  value='Reports' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Notifications' onmousedown=execute(String(''),this)>
                                 <input type='button' class='menuBtn'  value='Messages' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Log out' onmousedown=execute(String(''),this)>
+                                <input type='button' class='menuBtn'  value='Log out' onclick="javascript:location.href='<?php echo base_url() ?>index.php/login/logout'">
                                 <img src='<?php echo base_url() ?>images/ecg.gif' width=30 height=25  valign=bottom />
                             </div>
                         </td >
@@ -37,11 +37,11 @@
                      onclick='loadMailer(\"".$mdsfoss->FullName."\",\"".$mdsfoss->UserGroup."\",\"".$mdsfoss->Hospital."\")' >
 			</span>
                 <div class="pull-right" style="height: 100%; padding-top: 10px; padding-right:10px; font-size:14px;">
-                    <span class="pull-right" style="color: green">1991-01-31</span><br>
-                    <span style="color: green">Hello <b>Mr.Trung</b></span>
+                    <span class="pull-right" style="color: green"><?php echo date('Y-m-d'); ?></span><br>
+                    <span style="color: green">Hello <b><?php echo $this->session->userdata('title') . ' ' . $this->session->userdata('name') . ' ' . $this->session->userdata('other_name'); ?></b></span>
                     <span class="label-primary" style=" background-color: #428bca; display: inline; padding: .2em .6em .3em; font-size: 75%; font-weight: bold;
 													line-height: 1; color: #fff; text-align: center; white-space: nowrap; vertical-align: baseline;
-													border-radius: .25em;">Admin</span>
+													border-radius: .25em;"><?php echo $this->session->userdata('user_group_name'); ?></span>
                 </div>
             </td>
         </tr>

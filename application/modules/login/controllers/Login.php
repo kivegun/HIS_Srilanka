@@ -10,7 +10,7 @@ class Login extends NoLoginCheckController
     {
         parent::__construct();
         $this->load->model('m_user');
-        //$this->load->model('m_department');
+        $this->load->model('m_user_group');
         $this->load->model('m_user_has_user_group');
     }
 
@@ -32,6 +32,7 @@ class Login extends NoLoginCheckController
             $this->show_form($data);
         } else {
             //when run to here: logging in is successfully, user_group is determined based on department id
+
             $this->save_session();
             if ($this->input->post('NEXT')) {
                 $new_page = base_url() . "index.php/" . $this->input->post('NEXT');
@@ -48,7 +49,7 @@ class Login extends NoLoginCheckController
     public function show_form($data)
     {
         $this->load->vars($data);
-        $this->load->view('login_qch');
+        $this->load->view('login_abh');
     }
 
     function check_login($username)
@@ -86,9 +87,14 @@ class Login extends NoLoginCheckController
 
     function save_session()
     {
-        $this->session->set_userdata('uid', 1);
+        $user = $this->m_user->get($this->user->UID);
+        $user_group_name = $user->UserGroup;
+        $user_group = $this->m_user_group->get_by(array('Name' => $user_group_name));
+        $this->user_group = $user_group;
+
+        $this->session->set_userdata('uid', $this->user->UID);
         $this->session->set_userdata('title', $this->user->Title);
-        $this->session->set_userdata('name', $this->user->Name);
+        $this->session->set_userdata('name', $this->user->FirstName);
         $this->session->set_userdata('other_name', $this->user->OtherName);
         $this->session->set_userdata('username', $this->user->UserName);
         $this->session->set_userdata('user_group_id', $this->user_group->UGID);

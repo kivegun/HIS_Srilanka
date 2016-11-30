@@ -66,7 +66,7 @@ class LoginCheckController extends MY_Controller
     {
 //        $this->autoload['helper'] = array('url');
         parent::__construct();
-        //s$this->check_login();
+        $this->check_login();
         // set selected menu
         $this->set_top_selected_menu();
         $this->set_default_language();
