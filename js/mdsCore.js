@@ -1013,7 +1013,7 @@ function closeICDDialog(el) {
 function lookUpICD(el_id, type, text_container, srch_text) {
     // $( "#dialog:ui-dialog" ).dialog( "destroy" );
     var ihtml = $.ajax({
-        url : "lookup_icd?ELID=" + el_id + "&TYPE=" + type
+        url : document.location.origin + "/HIS_Srilanka/index.php/icd10/lookup_icd?ELID=" + el_id + "&TYPE=" + type
         + "&TEXT=" + text_container + "&SRCH=" + srch_text + "",
         global : false,
         type : "POST",
@@ -1052,7 +1052,7 @@ function lookUpSNOMED(el_id, type, txt) {
 }
 function getIMMRForICD(code) {
     var ihtml = $.ajax({
-        url : "include/lookup/lookup_immr.php?ICD=" + code + "",
+        url : document.location.origin + "/HIS_Srilanka/index.php/immr/lookup_immr?ICD=" + code + "",
         global : false,
         type : "POST",
         async : false
@@ -1175,7 +1175,7 @@ function checkSearchText(e, obj) {
     if (String(obj.value).match(reg)) {
         obj.value = '';
     }
-    if ((e.which == 13)) {
+    if (e.which == 13) {
         // var res =
         $.ajax({
             url: "checkID",
@@ -1183,7 +1183,7 @@ function checkSearchText(e, obj) {
             type: "POST",
             async: false,
             data: {
-                id: id
+                'id': id
             },
             success: function (result) {
                 if($.trim(result.error) != '' && $.trim(result.error) != 'Not Found! Try again...') {
@@ -1289,6 +1289,12 @@ function openDateRangeBox(id, title, type) {
         } ],
         title : title
     });
+}
+
+function getNormal(obj,val) {
+
+    $('#'+obj).val(val);
+
 }
 /*
 function canvas_save()

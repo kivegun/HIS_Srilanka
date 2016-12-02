@@ -97,21 +97,21 @@ URL: http: www.hhims.org
                     </tr>
                     <tr>
                         <td></td>
-                        <td colspan="2"><button id="login_submit" type="submit">Login</button></td>
+                        <td colspan="2"><button id="login_submit" type="submit" onclick="count()">Login</button></td>
                         <td></td>
                     </tr>
                     <tr style="height:10px;"></tr>
                 </table>
-
-
             </form>
         </div>
-<!--        <p align="center" width="595">-->
-<!--            <input type="radio" name="department" value="1" checked="checked"/> Clinics-->
-<!--            <input type="radio" name="department" value="2" /> OPD-->
-<!--            <input type="radio" name="department" value="3" /> PCU-->
-<!--        </p>-->
+        <!--        <p align="center" width="595">-->
+        <!--            <input type="radio" name="department" value="1" checked="checked"/> Clinics-->
+        <!--            <input type="radio" name="department" value="2" /> OPD-->
+        <!--            <input type="radio" name="department" value="3" /> PCU-->
+        <!--        </p>-->
     </div>
 </div>
 </body>
 </html>
+
+

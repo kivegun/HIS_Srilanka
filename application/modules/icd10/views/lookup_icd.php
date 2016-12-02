@@ -69,7 +69,7 @@ $tbl .= "<script language='javascript'> \n";
 						$tbl .= "return nRow; \n";
 					$tbl .= "}, \n";
 				   $tbl .= "'sPaginationType': 'full_numbers', \n";
-					$tbl .= "'sAjaxSource': 'server_process?FORM=lookup_icd' \n";
+					$tbl .= "'sAjaxSource': document.location.origin + '/HIS_Srilanka/index.php/icd10/server_process?FORM=lookup_icd' \n";
 				$tbl .= "} ); \n";
 				
 					$tbl .= "$('#example tbody tr').live('click', function(e){ \n";

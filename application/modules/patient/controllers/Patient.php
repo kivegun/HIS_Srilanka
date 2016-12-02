@@ -1388,7 +1388,7 @@ class Patient extends FormController
             }
         }
 
-        die (json_encode($error));
+        die (json_encode($error['error']));
 
 //        if (!$id){
 //            echo -1;

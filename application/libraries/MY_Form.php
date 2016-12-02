@@ -114,28 +114,29 @@ class MY_Form extends FormController
         echo form_hidden($name, $default_value);
     }
 
-    public function input_with_default_value_button($label = '', $name = '', $default_value = '', $button_click_value)
+    public function input_with_default_value_button($label = '', $name = '', $default_value = '', $setting_number = '', $button_click_value = '')
     {
         $data_label = array(
-            'class' => 'col-sm-2 control-label',
+            'class' => 'caption',
         );
-        $data_text = array(
-            'class' => 'form-control input-sm',
-            'name' => $name,
-            'id' => $name,
-        );
-        echo '<div class="form-group">';
+
+        echo '<div class="fieldCont">';
         echo form_label($label, $name, $data_label);
-        echo '<div class="col-sm-10">';
-        echo '<div class="input-group">';
-        echo form_input($data_text, set_value($name, $default_value));
-        echo '<span class="input-group-btn">';
-        echo '<button type="button" class="btn btn-default" onclick="$(\'#' . $name . '\').val(' . $button_click_value . ');">';
-        echo '<span class="glyphicon glyphicon-thumbs-up pull-right"></span>';
-        echo '</button>';
-        echo '</span>';
+        echo '<input name="'.$name.'" id="'.$name.'" type="number" class="input" '.$setting_number.' value="'.$default_value.'">';
+        echo '<img src="'.base_url().'images/thumbup.png" title="click to enter normal value" valign="bottom" style="cursor:pointer;" onclick="getNormal(\''.$name.'\',\''.$button_click_value.'\')">';
+        echo form_error($name);
         echo '</div>';
-        echo '</div>';
+    }
+
+    public function input_number($label = '', $name = '', $default_value = '', $setting_number = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+
+        echo '<div class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo '<input name="'.$name.'" id="'.$name.'" type="number" class="input" '.$setting_number.' value="'.$default_value.'">';
         echo form_error($name);
         echo '</div>';
     }
@@ -228,13 +229,13 @@ class MY_Form extends FormController
             'style' => 'width:450;',
             'pos' => '2',
             'readonly' => NULL,
-            'onfocus' => 'onclick=lookUpICD(\'ICDLink\',\'\',\'ICDLink\',$(\'#SNOMEDmap\').val());'
+            'onfocus' => 'onclick=lookUpICD(\''.$name.'\',\'\',\''.$name.'\',$(\'#SNOMEDmap\').val());'
         );
         echo '<div class="fieldCont">';
         echo form_label($label, $name, $data_label);
         echo form_textarea($data_text_area, set_value($name, $default_value), $extra);
         echo form_error($name);
-        echo '<img src="'.base_url().'images/clear.png" title="Clear field" width="15" height="15" valign="top" style="cursor:pointer" onclick="$(\'#ICDLink\').val(\'\')">';
+        echo '<img src="'.base_url().'images/clear.png" title="Clear field" width="15" height="15" valign="top" style="cursor:pointer" onclick="$(\'#'.$name.'\').val(\'\')">';
         echo '<lable id="hICDLink" class="fieldHelp" style="visibility: hidden;">ICD link</lable>';
         echo '<div id="icdDiv" title="ICD lookup"></div>';
         echo '</div>';

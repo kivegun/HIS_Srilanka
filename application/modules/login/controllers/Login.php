@@ -28,6 +28,8 @@ class Login extends NoLoginCheckController
         $this->form_validation->set_rules('password', 'Password', 'xss_clean');
         //$this->form_validation->set_rules('department', 'Department', 'trim|xss_clean|required');
         $data = array();
+
+
         if ($this->form_validation->run() == FALSE) {
             $this->show_form($data);
         } else {
@@ -44,6 +46,35 @@ class Login extends NoLoginCheckController
             header("Location: " . $new_page);
             exit;
         }
+//        $this->input->set_cookie('lock',1,time()+15);
+//        if ($this->input->cookie('lock') == 1) {
+//            $this->input->set_cookie('lock',1,time()+15);
+//            $this->load->view('count');
+//            exit;
+//        }
+//        else {
+//            if ($this->form_validation->run() == FALSE) {
+//                if ($this->input->cookie('count') == NULL) {
+//                    $this->input->set_cookie('count', 1);
+//                } else {
+//                    $this->input->set_cookie('count', $this->input->cookie('count') + 1);
+//                }
+//                if ($this->input->cookie('count') > 2) {
+//                    $this->input->set_cookie('count', 4, time() + 15);
+//                    $this->input->cookie('lock', 1, time() + 15);
+//                    $this->load->view('count');
+//                    exit;
+//                } else {
+//                    echo "<script>window.location='../login'</script>";
+//                    exit;
+//                }
+//            }
+//        }
+    }
+
+    public function count()
+    {
+        $this->load->view("count");
     }
 
     public function show_form($data)

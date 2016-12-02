@@ -4,10 +4,10 @@
         <div>
             <input type='button' class='submenuBtn' value='Create a visit'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'" >
             <input type='button' class='submenuBtn' value='Give an Appointment'  onclick=loadDataTable('','') >
-            <input type='button' class='submenuBtn' value='Add history' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/permission'">
+            <input type='button' class='submenuBtn' value='Add history' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_history/add/<?php echo $id ?>/?CONTINUE=patient/view/<?php echo $id ?>'"  >
             <input type='button' class='submenuBtn' value='Add allergy'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_allergy/add/<?php echo $id ?>/?CONTINUE=patient/view/<?php echo $id ?>'"  >
             <input type='button' class='submenuBtn' value='Hospital Settings'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/hospital_settings'" >
-            <input type='button' class='submenuBtn' value='Examination'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/institutions'" >
+            <input type='button' class='submenuBtn' value='Examination'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $id ?>/?CONTINUE=patient/view/<?php echo $id ?>'">
             <input type='button' class='submenuBtn' value='Attach file'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference/load/user_menu'"  >
         </div>
         <a class='LeftMenuItem' href=''>Prints</a>
