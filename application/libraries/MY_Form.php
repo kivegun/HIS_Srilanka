@@ -128,7 +128,7 @@ class MY_Form extends FormController
         echo '</div>';
     }
 
-    public function input_number($label = '', $name = '', $default_value = '', $setting_number = '')
+    public function input_number($label = '', $name = '', $default_value = '', $setting_number = '', $placeholder = '')
     {
         $data_label = array(
             'class' => 'caption',
@@ -136,8 +136,36 @@ class MY_Form extends FormController
 
         echo '<div class="fieldCont">';
         echo form_label($label, $name, $data_label);
-        echo '<input name="'.$name.'" id="'.$name.'" type="number" class="input" '.$setting_number.' value="'.$default_value.'">';
+        echo '<input name="'.$name.'" id="'.$name.'" type="number" class="input" '.$setting_number.' value="'.$default_value.'" placeholder="'.$placeholder.'">';
         echo form_error($name);
+        echo '</div>';
+    }
+
+    public function textar($default_value = 'images/human_body.jpg')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+
+        echo '<div class="fieldCont">';
+        echo form_label('Sketch of Injury points','', $data_label);
+        echo '    <div class="tools">';
+        echo '        <a href="#tools_sketch" data-tool="marker">Marker</a>';
+        echo '        <a href="#tools_sketch" data-tool="eraser">Eraser</a>';
+        echo '    </div>';
+        echo '    <canvas id=\'tools_sketch\' width=\'300\' height=\'300\' style=\'background:no-repeat center center;border:black 1px solid\'></canvas>';
+        echo '    <script type=\'text/javascript\'>
+                        var sigCanvas = document.getElementById(\'tools_sketch\');
+                        var context = sigCanvas.getContext(\'2d\');  
+                        var imageObj = new Image();
+                            imageObj.src = \''.base_url().$default_value.'\';
+                            imageObj.onload = function() {
+                            context.drawImage(this, 0, 0,sigCanvas.width,sigCanvas.width);
+                            };                    
+                            $(function() {
+                            $(\'#tools_sketch\').sketch({defaultColor: \'#FF0000\'});
+                            });';
+        echo '</script>';
         echo '</div>';
     }
 
@@ -347,7 +375,7 @@ class MY_Form extends FormController
 
 
 
-    public function button_submit_reset($id = '')
+    public function button_submit_reset()
     {
         echo '<div id="fieldCont" class="fieldCont">';
         echo '    <div class="caption">&nbsp;</div>';
@@ -358,6 +386,26 @@ class MY_Form extends FormController
         echo '                <td>';
         echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick="error();">Save</button>';
         echo '<button class="formButton" name="CancelBtn" id="CancelBtn" type="button" value="Cancel" onclick="window.history.back()">Cancel</button>';
+        echo '                </td>';
+        echo '            </tr>';
+        echo '        </tbody>';
+        echo '        </table>';
+        echo '    </div>';
+        echo '</div>';
+    }
+
+    public function button_submit_sketch($pid)
+    {
+        $date = date("Y-m-d H:i:s");
+        echo '<div id="fieldCont" class="fieldCont">';
+        echo '    <div class="caption">&nbsp;</div>';
+        echo '    <div>';
+        echo '        <table>';
+        echo '        <tbody>';
+        echo '            <tr>';
+        echo '                <td>';
+        echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick=\'canvas_save('.$pid.','.json_encode($date).');\'>Save</button>';
+        echo '<button class="formButton" name="CancelBtn" id="CancelBtn" type="button" value="OK" onclick="window.history.back()">OK</button>';
         echo '                </td>';
         echo '            </tr>';
         echo '        </tbody>';

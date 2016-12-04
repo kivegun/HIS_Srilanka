@@ -1296,6 +1296,8 @@ function getNormal(obj,val) {
     $('#'+obj).val(val);
 
 }
+
+
 /*
 function canvas_save()
 {       

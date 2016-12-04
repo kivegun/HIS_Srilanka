@@ -132,7 +132,7 @@
             $.ajax({
 
                 type :'POST',
-                url :'testSave.php',
+                url : document.location.origin + "/HIS_Srilanka/index.php/patient_examination/testSave",
                 dataType : 'json',
                 data:{
 
@@ -140,15 +140,15 @@
                     seid1:$pid,
                     seid2:$date
                 },
-
                 success: function(data)
                 {
-
 
                 }
             });
 
         }
+
+
 
         function canvas_save1($pid,$date)
         {
