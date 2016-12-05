@@ -31,7 +31,10 @@ class m_top_menu_has_user_group extends MY_CRUD {
     }
 
     function get_active_menu($ugid) {
-        $sql = 'SELECT * FROM `top_menu_has_user_group` INNER JOIN `top_menu` ON top_menu_has_user_group.MID = top_menu.MID WHERE top_menu_has_user_group.UGID = '.$ugid.' AND Active = true ORDER BY MenuOrder';
+        $sql  = "SELECT Name, Link ";
+        $sql .= " FROM user_menu WHERE Active = TRUE and UserGroup REGEXP '".$ugid."'  " ;
+        $sql .= " ORDER BY MenuOrder";
+//        $sql = 'SELECT * FROM `top_menu_has_user_group` INNER JOIN `top_menu` ON top_menu_has_user_group.MID = top_menu.MID WHERE top_menu_has_user_group.UGID = '.$ugid.' AND Active = true ORDER BY MenuOrder';
         return $this->table_select($sql);
     }
 }

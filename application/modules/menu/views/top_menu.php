@@ -7,19 +7,18 @@
                     <tr>
                         <td >
                             <div class='menu'>
-                                <input type='button' class='menuBtn'  value='Home' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'">
-                                <input type='button' class='menuBtn'  value='Preference' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'">
-                                <input type='button' class='menuBtn'  value='New Patient' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/create'">
-                                <input type='button' class='menuBtn'  value='Search' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/search'">
-                                <input type='button' class='menuBtn'  value='Pharmacy' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_prescription'">
-                                <input type='button' class='menuBtn'  value='Laboratory' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Procedure Room' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Wards' onclick="javascript:location.href='<?php echo base_url() ?>index.php/wards/search'">
-                                <input type='button' class='menuBtn'  value='Reports' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Notifications' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Messages' onmousedown=execute(String(''),this)>
-                                <input type='button' class='menuBtn'  value='Log out' onclick="javascript:location.href='<?php echo base_url() ?>index.php/login/logout'">
-                                <img src='<?php echo base_url() ?>images/ecg.gif' width=30 height=25  valign=bottom />
+                                <?php
+                                foreach ($top_menu as $menu) {
+                                    if (strtolower($menu['Link']) === strtolower($active_menu_link)) {
+                                        echo '<input type="button" class="menuBtnSelect"  value="'.$menu["Name"].'" onclick="javascript:location.href=\''.site_url().'/'.$menu['Link'].'\'">';
+                                    } else if($menu['Name'] =='Messages' && $inbox>0){
+                                        echo '<input type="button" id="BlnkBtn" class="BlnkBtn"  value="'.$menu["Name"].'" onclick="javascript:location.href=\'' . site_url() . '/' . $menu["Link"] . '\'"">';
+                                    } else {
+                                        echo '<input type="button" class="menuBtn"  value="'.$menu["Name"].'" onclick="javascript:location.href=\'' . site_url() . '/' . $menu["Link"] . '\'">';
+                                    }
+                                }
+                                ?>
+
                             </div>
                         </td >
                     </tr>
@@ -47,4 +46,34 @@
         </tr>
     </table>
 </div>
+<!--
+<input type='button' class='menuBtn'  value='Home' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'">
+<input type='button' class='menuBtn'  value='Preference' onclick="javascript:location.href='<?php echo base_url() ?>index.php/preference'">
+<input type='button' class='menuBtn'  value='New Patient' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/create'">
+<input type='button' class='menuBtn'  value='Search' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/search'">
+<input type='button' class='menuBtn'  value='Pharmacy' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_prescription'">
+<input type='button' class='menuBtn'  value='Laboratory' onmousedown=execute(String(''),this)>
+<input type='button' class='menuBtn'  value='Procedure Room' onmousedown=execute(String(''),this)>
+<input type='button' class='menuBtn'  value='Wards' onclick="javascript:location.href='<?php echo base_url() ?>index.php/wards/search'">
+<input type='button' class='menuBtn'  value='Reports' onmousedown=execute(String(''),this)>
+<input type='button' class='menuBtn'  value='Notifications' onmousedown=execute(String(''),this)>
+<input type='button' class='menuBtn'  value='Messages' onmousedown=execute(String(''),this)>
+<input type='button' class='menuBtn'  value='Log out' onclick="javascript:location.href='<?php echo base_url() ?>index.php/login/logout'">
+<img src='<?php echo base_url() ?>images/ecg.gif' width=30 height=25  valign=bottom />
+-->
+<!--while($row = $mdsDB->mysqlFetchArray($result))  {-->
+<!---->
+<!--if ($row["Link"] == "home.php?page=".$mdsfoss->Page) {-->
+<!--$menuItems .="<input type='button' class='menuBtnSelect'  value='".getPrompt($row["Name"])."' onmousedown=execute(String('".$row[Link]."'),this)>";-->
+<!--}-->
+<!--else if($row["Name"] =='Messages' && $inbox>0){-->
+<!---->
+<!--$menuItems .="<input type='button' id='BlnkBtn' class='BlnkBtn'  value='".getPrompt($row["Name"])."' onmousedown=execute(String('".$row[Link]."'),this)>";-->
+<!---->
+<!--}-->
+<!--else {-->
+<!--$menuItems .="<input type='button' class='menuBtn'  value='".getPrompt($row["Name"])."' onmousedown=execute(String('".$row[Link]."'),this)>";-->
+<!---->
+<!--}-->
+<!--}-->
 
