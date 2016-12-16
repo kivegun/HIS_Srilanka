@@ -17,6 +17,7 @@
         <div id="mdsHead" class="mdshead">System User</div>
         <?php echo Modules::run('leftmenu/preference'); //runs the available left menu for preferance ?>
 <!--        <div id="prefOps"><input type="button" value="Add new User / Staff" onclick="self.document.location='home.php?page=preferences&amp;mod=UserNew'"></div>-->
+            </div>
     </article>
             <div id="prefCont"></div>
         <?php echo $pager; ?>

@@ -21,7 +21,6 @@ class Hhims extends LoginCheckController
         header("Status: 200");
         header("Location: " . $home_page);
         exit;
-
     }
 
     public function get_user_info()

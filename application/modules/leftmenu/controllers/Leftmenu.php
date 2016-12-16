@@ -64,6 +64,10 @@ class Leftmenu extends LoginCheckController
         $this->load->view('left_menu_registry');
     }
 
+    public function doctor()
+    {
+        $this->load->view('left_menu_doctor');
+    }
 
     public function patient($id = null, $module = null)
     {

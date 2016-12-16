@@ -123,6 +123,7 @@ class Patient_Prescription extends FormController
 
     public function search()
     {
+        $this->set_top_selected_menu('patient_prescription');
         $qry = "SELECT opd_presciption.PRSID, 
            patient.PID, 
            concat(patient.Personal_Title, ' ',patient.Full_Name_Registered), 

@@ -379,9 +379,13 @@ class Patient extends FormController
         $this->load->model('mpersistent');
         $data["patient_info"] = $this->mpersistent->open_id($id, "patient", "PID");
         if (empty($data["patient_info"])) {
-            $data["error"] = "Patient not found";
+            $data["text"] = '<br>Patient not found <br><input  class=\'formButton\' type=\'button\' value=\'Ok\' onclick=history.back();>';
+            $data["head"] = 'Error';
+            $data["w"] = 300;
+            $data["h"] = 100;
             $this->load->vars($data);
             $this->load->view('patient_error');
+            return;
         }
         if (isset($data["patient_info"]["DateOfBirth"])) {
             $data["patient_info"]["Age"] = $this->get_age($data["patient_info"]["DateOfBirth"]);
@@ -1350,6 +1354,16 @@ class Patient extends FormController
     function banner_full($pid)
     {
         $data["patient_info"] = $this->m_patient->as_array()->get($pid);
+
+        if (empty($data["patient_info"])) {
+            $data["text"] = '<br>Patient not found <br><input  class=\'formButton\' type=\'button\' value=\'Ok\' onclick=history.back();>';
+            $data["head"] = 'Error';
+            $data["w"] = 300;
+            $data["h"] = 100;
+            $this->load->vars($data);
+            $this->load->view('patient_error');
+            return;
+        }
         if (isset($data["patient_info"]["DateOfBirth"])) {
             $data["patient_info"]["Age"] = $this->get_age($data["patient_info"]["DateOfBirth"]);
         }

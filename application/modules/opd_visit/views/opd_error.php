@@ -5,14 +5,14 @@
 
 	$("#mds_msg").html("<?php echo $text ?>");
 	$("#mds_msg").dialog({
-		width:<?php echo $w ?>,
-		height:<?php echo $h ?>,
-		autoOpen:true,
-		modal: true,
-		resizable:false,
-		position:"center",
-		close: function(event, ui){
-			history.back()
-		}
-	});
-</script>
+	 width:<?php echo $w ?>,
+	 height:<?php echo $h ?>,
+	 autoOpen:true,
+	 modal: true,
+	 resizable:false,
+	 position:"center",
+	 close: function(event, ui){
+	 history.back()
+	 }
+	 });
+	 </script>
