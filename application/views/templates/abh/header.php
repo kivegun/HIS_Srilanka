@@ -207,5 +207,4 @@
     </script>
 </head>
 <body>
-<form method="post" action="">
 <article role="main">

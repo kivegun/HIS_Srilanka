@@ -1,6 +1,6 @@
 <?php
 $out = "";
-$tools = "<img   src='".base_url()."images/edit-icon.png' width=15 height=15  style='cursor:pointer;' title='Edit record'  onclick=self.document.location='".base_url()."index.php/opd_visit/edit/".$opd_visits_info["OPDID"]."'>";
+$tools = "<img   src='".base_url()."images/edit-icon.png' width=15 height=15  style='cursor:pointer;' title='Edit record'  onclick=self.document.location='".base_url()."index.php/opd_visit/edit/".$opd_visits_info['PID'].'/'.$opd_visits_info["OPDID"]."'>";
 //$tools .= "<img   src='images/add_note.jpg' style='cursor:pointer;' title='Add Notes'  />";
 
 $out .= "<div class='".$css_Cont_class."' >\n";

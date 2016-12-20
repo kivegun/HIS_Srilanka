@@ -368,7 +368,7 @@ class Patient extends FormController
         echo "nothing here";
     }
 
-    public function banner($id)
+    public function banner($id, $extra = '')
     {
         if (!isset($id) || (!is_numeric($id))) {
             $data["error"] = "Patien not found";
@@ -378,6 +378,7 @@ class Patient extends FormController
         }
         $this->load->model('mpersistent');
         $data["patient_info"] = $this->mpersistent->open_id($id, "patient", "PID");
+        $data['extra'] = $extra;
         if (empty($data["patient_info"])) {
             $data["text"] = '<br>Patient not found <br><input  class=\'formButton\' type=\'button\' value=\'Ok\' onclick=history.back();>';
             $data["head"] = 'Error';

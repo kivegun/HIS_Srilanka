@@ -1,5 +1,5 @@
 <?php
-echo '<div id="patientBanner" class="patientTinny Tinny">';
+echo '<div id="patientBanner" class="patientTinny Tinny" '.$extra.'>';
 	echo '<table width="100%" border="0" class="tblPatientBannerTinny">';
         echo '<tbody>';
         echo '<tr>';

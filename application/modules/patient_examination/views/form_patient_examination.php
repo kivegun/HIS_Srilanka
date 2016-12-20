@@ -1,6 +1,6 @@
 <div class="content">
     <div id="mdsHead" class="mdshead">Add / Edit Patient examination</div>
-    <?php echo Modules::run('patient/banner', $pid);?>
+    <?php echo Modules::run('patient/banner', $pid, 'style="left:20;"');?>
     <?php
     $date = date("Y-m-d H:i:s");
             $form_generator = new MY_Form('Patient Examination');

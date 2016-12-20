@@ -38,7 +38,6 @@ class Patient_list extends LoginCheckController
         $clmns = array("Visit Date","","Complaint","Name","Details");
         //$status = "Status";
         $dte_field = "DateTimeOfVisit";
-        $link ="'home.php?page=opd&action=View&OPDID='+rowId+'&RETURN='+encodeURIComponent('home.php?page=patientlist&show=opdpatient')";
 
         $this->load->model('mpager', 'mpager');
 
@@ -67,7 +66,7 @@ class Patient_list extends LoginCheckController
 			$(this).css('background',c);
 		}).click(function(e){
 			var rowId = $(this).attr('id');
-			window.location=$link;
+			window.location='" . site_url("/opd_visit/view") . "/'+rowId+'';
 		});	
 		
 		}";

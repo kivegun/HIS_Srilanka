@@ -3,13 +3,13 @@
         <a class='LeftMenuItem' href=''>Commands</a>
         <div>
             <input type='button' class='submenuBtn' value='&laquo; Patient overview'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient/view/<?php echo $pid ?>'" >
-            <input type='button' class='submenuBtn' value='Add history' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_history/add/<?php echo $pid ?>/?CONTINUE=patient/view/<?php echo $pid ?>'"  >
-            <input type='button' class='submenuBtn' value='Add allergy'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_allergy/add/<?php echo $pid ?>/?CONTINUE=patient/view/<?php echo $pid ?>'"  >
-            <input type='button' class='submenuBtn' value='Examination'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
-            <input type='button' class='submenuBtn' value='Order LabTest'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
-            <input type='button' class='submenuBtn' value='Order ECG'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
-            <input type='button' class='submenuBtn' value='Prescribe drugs'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
-            <input type='button' class='submenuBtn' value='Treatments'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Add history' onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_history/add/<?php echo $pid ?>/?CONTINUE=patient/view/<?php echo $pid ?>'"  >
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Add allergy'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_allergy/add/<?php echo $pid ?>/?CONTINUE=patient/view/<?php echo $pid ?>'"  >
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Examination'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Order LabTest'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Order ECG'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Prescribe drugs'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Treatments'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
         </div>
         <a class='LeftMenuItem' href=''>Questionnaire</a>
         <div>
@@ -26,3 +26,5 @@
         </div>
     </div>
 </div>
+
+

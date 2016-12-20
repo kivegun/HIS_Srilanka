@@ -93,9 +93,6 @@ class Complaints extends FormController
         }
     }
 
-
-
-
     private function set_common_validation()
     {
         $this->form_validation->set_rules('name', 'Complaint', 'trim|xss_clean|required');
@@ -120,5 +117,9 @@ class Complaints extends FormController
         echo json_encode($result);
     }
 
+    public function lookup_complaints()
+    {
+        $this->load->view('lookup_complaints');
+    }
 
 }

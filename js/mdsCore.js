@@ -28,6 +28,7 @@
 //  Consultant: Dr. Denham Pole                 DrPole[AT]gmail.com          //
 //  URL: http://www.mdsfoss.org                                              //
 // ------------------------------------------------------------------------- //
+
 function openSearch(ops, rId) {
     var params = "menubar=no,location=no,resizable=yes,scrollbars=yes,status=no,width=750,height=700"
     if (ops == "Village") {
@@ -992,23 +993,26 @@ function closeICDDialog(el) {
     $("#icdDiv").dialog('close');
 
 }
-// function lookUpICD(el_id,type,text_container,srch_text){
-//     //$( "#dialog:ui-dialog" ).dialog( "destroy" );
-//     var ihtml=$.ajax({
-//         url: "lookup_icd",
-//         global : false,
-//         method : "POST",
-//         async : false
-//     }).responseText;
-//     $("#complaintDiv").html(ihtml);
-//     $("#complaintDiv").dialog({
-//         autoOpen : true,
-//         width : 500,
-//         height : 500,
-//         modal : true,
-//         position : 'right'
-//     });
-// }
+function lookUpComplaints(el_id, type) {
+    // $( "#dialog:ui-dialog" ).dialog( "destroy" );
+
+    var ihtml = $.ajax({
+        url : document.location.origin + "/HIS_Srilanka/index.php/complaints/lookup_complaints?ELID=" + el_id + "&TYPE="
+        + type + "",
+        global : false,
+        type : "POST",
+        async : false
+    }).responseText;
+    $("#complaintDiv").html(ihtml);
+    $("#complaintDiv").dialog({
+        autoOpen : true,
+        width : 500,
+        height : 500,
+        modal : true,
+        position : 'right'
+    });
+}
+
 
 function lookUpICD(el_id, type, text_container, srch_text) {
     // $( "#dialog:ui-dialog" ).dialog( "destroy" );
@@ -1050,6 +1054,7 @@ function lookUpSNOMED(el_id, type, txt) {
     });
     $("#example1_filter input:text").focus();
 }
+
 function getIMMRForICD(code) {
     var ihtml = $.ajax({
         url : document.location.origin + "/HIS_Srilanka/index.php/immr/lookup_immr?ICD=" + code + "",

@@ -69,10 +69,23 @@ class Leftmenu extends LoginCheckController
         $this->load->view('left_menu_doctor');
     }
 
-    public function patient($id = null, $module = null)
+    public function patient($pid = null, $module = null)
     {
-        $data['id'] = $id;
+        $data['pid'] = $pid;
+//        $data['opdid'] = $opdid;
         $data['module'] = $module;
+
+        $this->load->database();
+        $sql = 'SELECT ADMID FROM admission
+                WHERE (PID = "'. $pid .'") AND (DischargeDate = "")';
+        $query = $this->db->query($sql);
+        if ($query->num_rows() > 0) {
+            $data['have_any_opened_admission'] = true;
+        }
+        else {
+            $data['have_any_opened_admission'] = false;
+        }
+
         $this->load->vars($data);
         $this->load->view('left_menu_patient');
     }
@@ -84,6 +97,15 @@ class Leftmenu extends LoginCheckController
         $data['pid'] = $pid;
         $data['opdid'] = $opdid;
         $data['opd_info'] = $opd_info;
+
+        $data["opd_visits_info"] = $this->m_opd_visit->as_array()->get($opdid);
+        $visit_date = $data["opd_visits_info"]["DateTimeOfVisit"];
+
+        if ($this->isOneDayOld($visit_date) >= 1 ) $data['isOpened'] = false;
+        else $data['isOpened'] = true;
+
+        if ($data['isOpened']) $data['css_menu_time'] =  "";
+        else $data['css_menu_time'] =  "style='color:#cccccc;cursor:not-allowed;'  disabled";
 
         $data["d_day"] = $opd_info["days"];
         $this->load->vars($data);
@@ -151,6 +173,24 @@ class Leftmenu extends LoginCheckController
     public function user_config()
     {
         $this->load->view('left_menu_user_config');
+    }
+
+    private function isOneDayOld($visit_date = ''){
+
+        // First we need to break these dates into their constituent parts:
+        $gd_a = getdate(  strtotime($visit_date));
+        $gd_b = getdate(  strtotime(date('Y/m/d')) );
+
+        // Now recreate these timestamps, based upon noon on each day
+        // The specific time doesn't matter but it must be the same each day
+        $a_new = mktime( 12, 0, 0, $gd_a['mon'], $gd_a['mday'], $gd_a['year'] );
+        $b_new = mktime( 12, 0, 0, $gd_b['mon'], $gd_b['mday'], $gd_b['year'] );
+
+        // Subtract these two numbers and divide by the number of seconds in a
+        //  day. Round the result since crossing over a daylight savings time
+        //  barrier will cause this time to be off by an hour or two.
+
+        return  round( abs( $a_new - $b_new ) / 86400 ) ;
     }
 }
 

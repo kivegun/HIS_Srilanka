@@ -595,22 +595,23 @@ function closeICDDialog(el) {
     $("#icdDiv").dialog('close'); 
 
 }
-function lookUpComplaints(el_id,type){
-    //$( "#dialog:ui-dialog" ).dialog( "destroy" );
+function lookUpComplaints(el_id, type) {
+    // $( "#dialog:ui-dialog" ).dialog( "destroy" );
 
-    var ihtml=$.ajax({
-        url: "include/lookup/lookup_complaints.php?ELID="+el_id+"&TYPE="+type+"",
-        global: false,
-        type: "POST",
-        async:false
+    var ihtml = $.ajax({
+        url : document.location.origin + "/HIS_Srilanka/index.php/complaints/lookup_complaints?ELID=" + el_id + "&TYPE="
+        + type + "",
+        global : false,
+        type : "POST",
+        async : false
     }).responseText;
-    $( "#complaintDiv" ).html(ihtml);
+    $("#complaintDiv").html(ihtml);
     $("#complaintDiv").dialog({
-        autoOpen:true,
-        width: 500,
-        height: 500, 
-        modal: true, 
-        position:'right'
+        autoOpen : true,
+        width : 500,
+        height : 500,
+        modal : true,
+        position : 'right'
     });
 }
 

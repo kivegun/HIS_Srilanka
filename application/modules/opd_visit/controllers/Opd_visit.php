@@ -16,47 +16,148 @@ class Opd_Visit extends FormController
         return;
     }
 
-    public function create($pid, $active_list_id)
+    public function create($pid)
     {
         $data = array();
         $data['pid'] = $pid;
-        $data['default_entry_time'] = date("Y-m-d H:i:s");
-        $data['default_reason']='';
-        $data['default_destination']='';
+        $data['default_visit_time'] = date("Y-m-d H:i:s");
+        $data['default_onset_date'] = date("Y-m-d");
+        $data['default_doctor'] = $this->session->userdata('title') . ' ' . $this->session->userdata('name') . ' ' . $this->session->userdata('other_name');
+        $data['dropdown_visit_type'] = $this->get_dropdown_visit_type('result');
+        $data['default_visit_type']='';
         $data['default_complaint'] = '';
         $data['default_remarks'] = '';
-        $data['default_doctor'] = $this->get_session('name') . ' ' . $this->get_session('other_name');
+        $data['complaint'] = $this->getComplaints();
 
-        $this->form_validation->set_rules('date_time_visit', 'Date Time Of Visit', 'trim|xss_clean|required');
-        $this->form_validation->set_rules('complaint', 'Complaint / Injury', 'trim|xss_clean|required');
+        $data['default_create_date'] = date("Y-m-d H:i:s");
+        $data['default_create_user'] = $this->session->userdata('name') . ' ' . $this->session->userdata('other_name');
+        $data['default_last_update'] = '';
+        $data['default_last_update_user'] = '';
+
+        $this->form_validation->set_rules('OnSetDate', 'Onset Date', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('Complaint', 'Complaint / Injury', 'trim|xss_clean|required');
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean');
+//        $this->form_validation->set_rules('Doctor', 'Doctor', 'trim|xss_clean|required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load_form($data);
         } else {
             $insert_data = array(
                 'PID' => $pid,
-                'DateTimeOfVisit' => $this->input->post('date_time_visit'),
-                'Complaint' => $this->input->post('complaint'),
-                'EntryTime' => $this->input->post('entry_time'),
-                'HospitalizationReason' => $this->input->post('reason'),
-                'Destination' => $this->input->post('destination'),
-                'Remarks' => $this->input->post('remarks'),
-                'ActiveListID' => $active_list_id,
+                'DateTimeOfVisit' => $this->input->post('DateTimeOfVisit'),
+                'OnSetDate' => $this->input->post('OnSetDate'),
                 'Doctor' => $this->get_session('uid'),
+                'Complaint' => $this->input->post('Complaint'),
+                'VisitType' => $this->input->post('VisitType'),
+                'Remarks' => $this->input->post('remarks'),
             );
             $opd_id = $this->m_opd_visit->insert($insert_data);
-            $update_active_list = array(
-                'VisitID' => $active_list_id,
-                'Status' => 'Observe'
-            );
-            $this->load->model('m_patient_active_list');
-            $this->m_patient_active_list->update($active_list_id, $update_active_list);
+
             $this->session->set_flashdata(
                 'msg', 'REC: ' . ucfirst($opd_id . ' created')
             );
-            $this->redirect_if_no_continue('opd_visit/view/' . $opd_id);
+
+//            $this->redirect_if_no_continue($link);
+//            $this->redirect_if_no_continue('opd_visit/view/' . $opd_id);
+            if ($this->input->post('SaveBtn') == 'Save') {
+                $this->redirect_if_no_continue('');
+            }
+            else if ($this->input->post('SaveBtn') == 'Labtests') {
+                $this->redirect_if_no_continue('');
+            }
+            else if ($this->input->post('SaveBtn') == 'Prescription') {
+                $this->redirect_if_no_continue('');
+            }
+            else if ($this->input->post('SaveBtn') == 'Treatment') {
+                $this->redirect_if_no_continue('');
+            }
+            else if ($this->input->post('SaveBtn') == 'Allergies') {
+                $this->redirect_if_no_continue('patient_allergy/add/'.$pid.'/?CONTINUE=patient/view/'.$pid);
+            }
+            else if ($this->input->post('SaveBtn') == 'History') {
+                $this->redirect_if_no_continue('patient_history/add/'.$pid.'/?CONTINUE=patient/view/'.$pid);
+            }
+            if ($this->input->post('SaveBtn') == 'Examination') {
+                $this->redirect_if_no_continue('patient_examination/add/'.$pid.'/?CONTINUE=patient/view/'.$pid);
+            }
         }
+    }
+
+    public function edit($pid, $opdid)
+    {
+        $opd_visit = $this->m_opd_visit->get($opdid);
+        if (empty($opd_visit))
+            die('Id not exist');
+        $data = array();
+        $data['opdid'] = $opdid;
+        $data['pid'] = $pid;
+        $data['default_visit_time'] = $opd_visit->DateTimeOfVisit;
+        $data['default_onset_date'] = $opd_visit->OnSetDate;
+        $data['default_doctor'] = $opd_visit->Doctor;
+        $data['dropdown_visit_type'] = $this->get_dropdown_visit_type('result');
+        $data['default_visit_type'] = $opd_visit->VisitType;
+        $data['default_complaint'] = $opd_visit->Complaint;
+        $data['default_remarks'] = $opd_visit->Remarks;
+        $data['complaint'] = $this->getComplaints();
+
+        $data['default_create_date'] = $opd_visit->CreateDate;
+        $data['default_create_user'] = $opd_visit->CreateUser;
+        $data['default_last_update'] = $opd_visit->LastUpDate;
+        $data['default_last_update_user'] = $opd_visit->LastUpDateUser;
+
+        $this->form_validation->set_rules('OnSetDate', 'Onset Date', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('Complaint', 'Complaint / Injury', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean');
+//        $this->form_validation->set_rules('Doctor', 'Doctor', 'trim|xss_clean|required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->load_form($data);
+        } else {
+            $update_data = array(
+                'Complaint' => $this->input->post('Complaint'),
+                'VisitType' => $this->input->post('VisitType'),
+                'Remarks' => $this->input->post('remarks'),
+            );
+            $opd_id = $this->m_opd_visit->update($opdid, $update_data);
+
+            $this->session->set_flashdata(
+                'msg', 'REC: ' . ucfirst($opd_id . ' edited')
+            );
+            $this->redirect_if_no_continue('/opd_visit/view/' . $opdid);
+        }
+    }
+
+    public function get_dropdown_visit_type($type = 'json')
+    {
+        $this->load->model('m_visit_type');
+        $result = $this->m_visit_type->order_by('name')->dropdown('Name', 'Name');
+        if ($type == 'json') {
+            print(json_encode($result));
+        }
+        return $result;
+    }
+
+    private function getComplaints(){
+        $this->load->database();
+        $out = "[ ";
+        $rep = array("'",  "&");
+        $with   = array("\'", "and");
+
+        $sql = " SELECT Name,isNotify 
+                FROM complaints WHERE Active = TRUE 
+                ORDER BY Name ";
+        $con = mysqli_connect('localhost', 'root', '310191', 'mds62');
+        $result = mysqli_query($con, $sql);
+        if (!$result) {
+            return "[]";
+        }
+        while($row = mysqli_fetch_array($result, MYSQLI_BOTH))  {
+            $out .= "'".str_replace($rep, $with, $row["Name"])."', ";
+        }
+        $out .=" '']";
+
+
+        return $out;
     }
 
     public function info($opd_id)
@@ -66,11 +167,11 @@ class Opd_Visit extends FormController
 //            $this->load->model('m_refer_to_adm');
 //            $data['refer_to_adm'] = $this->m_refer_to_adm->get($data['opd_visits_info']['refer_to_adm_id']);
 //        }
-        if ($this->isOneDayOld() >= 1 ) $data['isOpened'] = false;
-        else $data['isOpened'] = true;
-
-        if ($data['isOpened']) $data['css_Cont_class'] =  "opdCont";
-        else $data['css_Cont_class'] =  "opdContClose";
+//        if ($this->isOneDayOld() >= 1 ) $data['isOpened'] = false;
+//        else $data['isOpened'] = true;
+//
+//        if ($data['isOpened']) $data['css_Cont_class'] =  "opdCont";
+//        else $data['css_Cont_class'] =  "opdContClose";
 
         $this->load->vars($data);
         $this->load->view('opd_info');

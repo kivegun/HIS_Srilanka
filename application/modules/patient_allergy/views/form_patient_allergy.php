@@ -1,6 +1,6 @@
 <div class="content">
     <div id="mdsHead" class="mdshead">Add / Edit Allergy</div>
-    <?php echo Modules::run('patient/banner', $pid);?>
+    <?php echo Modules::run('patient/banner', $pid, 'style="left:20;"');?>
 
             <?php
             $form_generator = new MY_Form('Patient Allergy');

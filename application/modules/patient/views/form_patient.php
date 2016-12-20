@@ -21,7 +21,8 @@
                 'Widow' => 'Widow',
                 'Unknown' => 'Unknown',
             );
-            $form_generator->dropdown('Civil Status', 'civil_status', $civil_status, $default_civil_status);
+            if(function_usable('create')) { 
+            $form_generator->dropdown('Civil Status', 'civil_status', $civil_status, $default_civil_status); }
             $form_generator->input_date('*Date of Birth', 'date_of_birth', $default_date_of_birth, 'Date of Birth');
             $form_generator->input_nic('NIC', 'nic', $default_nic,'NNNNNNNNN[vVxX]');
             $form_generator->input('Contact telephone', 'telephone', $default_telephone, 'Contact Telephone Number');

@@ -34,14 +34,8 @@ class MY_Form extends FormController
 //        echo '    a.style.display="none" }';
         echo '}';
         echo '</script>';
-
-        $form_attributes = array(
-            'class' => 'form-horizontal',
-            'role' => 'form'
-        );
-
         echo '<div id="formCont" class="formCont" style="left:100;">';
-        echo '<form id="frm" method="post">';
+        echo '<form id="frm" method="post" action="">';
 
     }
 
@@ -266,9 +260,67 @@ class MY_Form extends FormController
         echo '<img src="'.base_url().'images/clear.png" title="Clear field" width="15" height="15" valign="top" style="cursor:pointer" onclick="$(\'#'.$name.'\').val(\'\')">';
         echo '<lable id="hICDLink" class="fieldHelp" style="visibility: hidden;">ICD link</lable>';
         echo '<div id="icdDiv" title="ICD lookup"></div>';
-        echo '</div>';
     }
 
+    public function text_area_complaints($label = '', $name = '', $default_value = '', $place_holder = '', $complaint = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+        $data_text_area = array(
+            'class' => 'input ui-autocomplete-input',
+            'name' => $name,
+            'id' => $name,
+            'rows' => 4,
+            'placeholder' => $place_holder,
+            'style' => 'width:450;height:40',
+            'pos' => '2',
+            'autocomplete' => 'off',
+            'role' => 'textbox',
+            'aria-autocomplete' => 'list',
+            'aria-haspopup' => 'true'
+        );
+        echo '<div id="fcComplaint" class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo form_textarea($data_text_area, set_value($name, $default_value));
+        echo form_error($name);
+        echo '<img src="'.base_url().'images/search.png" title="Search for complaint" valign="top" style="cursor:pointer;" onclick="lookUpComplaints(\'Complaint\',\'\');">';
+        echo '<lable id="hComplaint" class="fieldHelp" style="visibility: hidden;">Complaint/Injury </lable>';
+        echo '<div id="complaintDiv" title="Complaints lookup"></div>';
+        echo '<script language="javascript">
+                function split( val ) {
+			return val.split( /,\s*/ );
+		}
+		function extractLast( term ) {
+			return split( term ).pop();
+		}
+                    
+         var data = '.$complaint.';
+         $(document).ready(function() {
+        $(\'#Complaint\').bind( \'keydown\', function( event ) {
+                        if ( event.keyCode === $.ui.keyCode.TAB &&
+                                $( this ).data( \'autocomplete\' ).menu.active ) {
+                            event.preventDefault();
+                        }
+                    }).autocomplete({
+            minLength: 2,
+                                focus: function() {return false;},
+                                select: function( event, ui ) {
+                                    var terms = split( this.value );
+                            terms.pop();
+                            terms.push( ui.item.value );
+                            terms.push( \'\' );
+                            this.value = terms.join( \',\' );
+                            return false;
+                                },
+        
+        source:function( request, response ) {
+                                response( $.ui.autocomplete.filter(
+                                data, extractLast( request.term ) ) );
+                        }});
+         });
+        </script>';
+    }
 
     public function password($label = '', $name = '', $default_value = '', $place_holder = '')
     {
@@ -373,8 +425,6 @@ class MY_Form extends FormController
 
     }
 
-
-
     public function button_submit_reset()
     {
         echo '<div id="fieldCont" class="fieldCont">';
@@ -406,6 +456,35 @@ class MY_Form extends FormController
         echo '                <td>';
         echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick=\'canvas_save('.$pid.','.json_encode($date).');\'>Save</button>';
         echo '<button class="formButton" name="CancelBtn" id="CancelBtn" type="button" value="OK" onclick="window.history.back()">OK</button>';
+        echo '                </td>';
+        echo '            </tr>';
+        echo '        </tbody>';
+        echo '        </table>';
+        echo '    </div>';
+        echo '</div>';
+    }
+
+    public function button_opd()
+    {
+        echo '<div id="fieldCont" class="fieldCont">';
+        echo '    <div class="caption">&nbsp;</div>';
+        echo '    <div>';
+        echo '        <table>';
+        echo '        <tbody>';
+        echo '            <tr>';
+        echo '                <td>';
+        echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick="error();">Save</button>';
+        echo '<button class="formButton" name="CancelBtn" id="CancelBtn" type="button" value="Cancel" onclick="window.history.back()">Cancel</button>';
+        echo '                </td>';
+        echo '            </tr>';
+        echo '            <tr>';
+        echo '                <td>';
+        echo '<button class="formButton" value="Labtests" name="SaveBtn" id="SaveBtn1" type="submit">Labtests</button>';
+        echo '<button class="formButton" value="Prescription" name="SaveBtn" id="SaveBtn2" type="submit">Prescription</button>';
+        echo '<button class="formButton" value="Treatment" name="SaveBtn" id="SaveBtn3" type="submit">Treatment</button>';
+        echo '<button class="formButton" value="Allergies" name="SaveBtn" id="SaveBtn4" type="submit">Allergies</button>';
+        echo '<button class="formButton" value="History" name="SaveBtn" id="SaveBtn5" type="submit">History</button>';
+        echo '<button class="formButton" value="Examination" name="SaveBtn" id="SaveBtn6" type="submit">Examination</button>';
         echo '                </td>';
         echo '            </tr>';
         echo '        </tbody>';
