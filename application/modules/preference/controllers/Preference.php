@@ -38,7 +38,6 @@ class Preference extends LoginCheckController
             $sql .= $column . ',';
         }
 
-
         $sql = substr($sql, 0, -1);
         $sql .= " FROM $table ";
 
@@ -46,13 +45,12 @@ class Preference extends LoginCheckController
         $this->mpager->setSql($sql);
         $this->mpager->setDivId('prefCont');
         $this->mpager->setSortorder('asc');
-        //set colun headings
+        //set column headings
         $colNames = array();
 
         foreach ($frm["DISPLAY_LIST"] as $colName) {
             array_push($colNames, $colName);
         }
-
 
         $this->mpager->setColNames($colNames);
 

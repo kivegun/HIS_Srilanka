@@ -9,7 +9,7 @@
             <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Order LabTest'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
             <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Order ECG'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
             <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Prescribe drugs'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
-            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Treatments'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/patient_examination/add/<?php echo $pid ?>'">
+            <input type='button' class='submenuBtn' <?php echo $css_menu_time ?> value='Treatments'  onclick="javascript:location.href='<?php echo base_url() ?>index.php/opd_visit/opd_treatment/<?php echo $opdid ?>'">
         </div>
         <a class='LeftMenuItem' href=''>Questionnaire</a>
         <div>

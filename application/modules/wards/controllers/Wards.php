@@ -96,6 +96,8 @@ class Wards extends FormController
 
     public function search()
     {
+        $this->set_top_selected_menu('wards/search');
+
         $qry = 'SELECT w.`WID`,
 				w.`Name`,
 				w.`Type`,

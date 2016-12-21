@@ -57,28 +57,46 @@ class Permission extends LoginCheckController
 //            var_dump($data['default_user_group']);
             );
             $this->redirect_if_no_continue('preference/load/permission');
-
         }
-
-
     }
 
     public function button($data = array()){
         var_dump($data);
     }
 
-//    public function check_permission($name, $type) {
-//        $ugid = $this->session->userdata('user_group_id');
-//        if (empty($ugid))
-//            return false;
-//        $this->load->database();
-//        $sql = 'SELECT * FROM user_group_have_permission
-//                LEFT JOIN permission ON permission.PERID = user_group_have_permission.PERID
-//                WHERE permission.Name = "'.$name.'" AND UGID = '. $ugid. ' AND Type = "'.$type. '" AND Active = 1';
-//        $query = $this->db->query($sql);
-//        if ($query->num_rows() > 0) {
-//            return true;
+    private function openByGroup() {
+
+        $this->load->database();
+        $result = $this->db->query('select PRMID,UserAccess from permission where UserGroup = "'.$this->session->userdata('user_group_name').'" ' );
+        $count = $result->num_rows();
+        if ($count!=1) return NULL;
+        foreach ($result->result_array() as $row){
+            return $row["UserAccess"];
+        }
+//        $row = $result->result_array();
+//        if ($row["PRMID"]) {
+//            return $row["UserAccess"];
 //        }
-//        return false;
+//        else return null;
+    }
+
+    public function check_permission($access) {
+
+        $mdsPermission = $this->openByGroup();
+        var_dump($mdsPermission);
+        $obj = json_decode($mdsPermission);
+        if ($obj->{$access}) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+//    public function mdsError() {
+//        $data = '';
+////        $this->render('permission_error', $data);
+//        $this->load->view('permission_error');
 //    }
+
 }

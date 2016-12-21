@@ -5,7 +5,11 @@
             ?>
             <?php
             $form_generator = new MY_Form('OPD Visit');
-            $form_generator->form_open_current_url();
+            if($this->router->fetch_method() == 'create') {
+                $form_generator->form_open_current_url();
+            } else {
+                $form_generator->form_open_current_url($style, $class);
+            }
             echo '</br>';
             $form_generator->input('Date and time of visit', 'DateTimeOfVisit', $default_visit_time, '', 'readonly');
             if($this->router->fetch_method() == 'create') {
@@ -28,6 +32,7 @@
                 $form_generator->button_submit_reset();
             }
             $form_generator->form_close();
+//            echo Modules::run('permission/check_permission', 'opd_visit_New');
             ?>
 
 </div>

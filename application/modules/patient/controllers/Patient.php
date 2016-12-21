@@ -21,9 +21,11 @@ class Patient extends FormController
 
     public function create()
     {
-//        $this->set_top_selected_menu('patient/create');
-//        if (!Modules::run('permission/check_permission', 'patient', 'create'))
-//            die('You do not have permission!');
+        $this->set_top_selected_menu('patient/create');
+        if (!Modules::run('permission/check_permission', 'patient_New')) {
+            die($this->mdsError());
+        }
+
         $data = array();
         $data['id'] = 0;
         $data['default_title'] = '';
@@ -164,83 +166,6 @@ class Patient extends FormController
         $reg = '/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/';
         return preg_match($reg,$dob);
     }
-
-
-//    private function insert()
-//    {
-//        if (!$this->input->post('bi_id_checkbox') && $this->input->post('bi_id') && strlen($this->input->post('bi_id')) > 0)
-//            $bi_id = $this->input->post('bi_id');
-//        else
-//            $bi_id = NULL;
-//        if (!$this->input->post('nuit_id_checkbox') && $this->input->post('nuit_id') && strlen($this->input->post('nuit_id')) > 0)
-//            $nuit_id = $this->input->post('nuit_id');
-//        else
-//            $nuit_id = NULL;
-//        $data = array(
-//            'Personal_Title' => $this->input->post('title'),
-//            'Name' => $this->input->post('name'),
-//            'OtherName' => $this->input->post('other_name'),
-//            'Gender' => $this->input->post('gender'),
-//            'Personal_Civil_Status' => $this->input->post('civil_status'),
-//            'DateOfBirth' => $this->input->post('date_of_birth'),
-//            'Occupation' => $this->input->post('occupation'),
-//            'BI_ID' => $bi_id,
-//            'NUIT_ID' => $nuit_id,
-//            'Telephone' => $this->input->post('telephone'),
-//            'Address_Street' => $this->input->post('address'),
-////            'Address_Village' => $this->input->post('village'),
-//            'Remarks' => $this->input->post('remarks'),
-//            'who_province_id' => $this->input->post('province'),
-//            'who_district_id' => $this->input->post('district'),
-//            'who_health_unit_id' => $this->input->post('health_unit'),
-//        );
-//        $id = $this->m_patient->insert($data);
-//        //redirect
-//        $this->session->set_flashdata(
-//            'msg', 'REC: ' . ucfirst(strtolower($this->input->post("name"))) . ' created'
-//        );
-//        $this->redirect_if_no_continue('/patient/search');
-//    }
-
-//    public function get_dropdown_provinces($type = 'json')
-//    {
-//        $this->load->model('m_who_provinces');
-//        $result = $this->m_who_provinces->order_by('name')->dropdown('province_code', 'name');
-//        if ($type == 'json') {
-//            print(json_encode($result));
-//        }
-//        return $result;
-//    }
-//
-//    public function get_district($province_id = 4, $type = 'json')
-//    {
-//        $this->load->model('m_who_district');
-//        $result = $this->m_who_district->order_by('name')->get_many_by(array('province_code' => $province_id));
-//        if ($type == 'json') {
-//            print(json_encode($result));
-//        } else {
-//            foreach ($result as $item) {
-//                $drop_down[$item->district_code] = $item->name;
-//            }
-//            return $drop_down;
-//        }
-//    }
-//
-//    public function get_health_unit($district_id = 55, $type = 'json')
-//    {
-//        $this->load->model('m_who_health_unit');
-//        $result = $this->m_who_health_unit->order_by('US')->get_many_by(array('CD' => $district_id));
-//        if ($type == 'json') {
-//            print(json_encode($result));
-//        } else {
-//            foreach ($result as $item) {
-//                $drop_down[$item->id] = $item->US;
-//            }
-//            return $drop_down;
-//        }
-//    }
-
-
 
     public function edit($id)
     {

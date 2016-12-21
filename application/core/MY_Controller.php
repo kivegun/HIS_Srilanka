@@ -117,6 +117,11 @@ class LoginCheckController extends MY_Controller
             self::$is_set_language = true;
         }
     }
+
+    public function mdsError() {
+        $text = "<div class='mdsAccessError'>You dont have enough permission.<br>Contact your system Administrator!<br><a href='javascript:window.history.back()'>Return</a></div>";
+        return $text;
+    }
 }
 
 class FormController extends LoginCheckController

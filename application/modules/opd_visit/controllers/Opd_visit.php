@@ -8,6 +8,7 @@ class Opd_Visit extends FormController
         $this->load->model('m_user');
         $this->load->model('m_patient');
         $this->load->model('m_opd_visit');
+        $this->load->model('m_opd_treatment');
 //        $this->load_form_language();
     }
 
@@ -18,11 +19,25 @@ class Opd_Visit extends FormController
 
     public function create($pid)
     {
+        $group_name = $this->session->userdata('user_group_name');
+        if (!Modules::run('permission/check_permission', 'opd_visit_New')) {
+//            die('You do not have permission!');
+            die($this->mdsError());
+        }
+        $this->load->database();
+        $sql="SELECT UID,Title,FirstName,OtherName ";
+        $sql .= ' FROM user WHERE (Active = TRUE) AND ((Post = "OPD Doctor") OR (Post = "Consultant")) AND UserGroup = "'.$group_name.'"';
+        $sql .= " ORDER BY OtherName ";
+        $result = $this->db->query($sql);
+        $count = $result->num_rows();
+        if ($count == 1) $doctor = $this->session->userdata('title') . ' ' . $this->session->userdata('name') . ' ' . $this->session->userdata('other_name');
+        else $doctor = '';
+
         $data = array();
         $data['pid'] = $pid;
         $data['default_visit_time'] = date("Y-m-d H:i:s");
         $data['default_onset_date'] = date("Y-m-d");
-        $data['default_doctor'] = $this->session->userdata('title') . ' ' . $this->session->userdata('name') . ' ' . $this->session->userdata('other_name');
+        $data['default_doctor'] = $doctor;
         $data['dropdown_visit_type'] = $this->get_dropdown_visit_type('result');
         $data['default_visit_type']='';
         $data['default_complaint'] = '';
@@ -37,7 +52,7 @@ class Opd_Visit extends FormController
         $this->form_validation->set_rules('OnSetDate', 'Onset Date', 'trim|xss_clean|required');
         $this->form_validation->set_rules('Complaint', 'Complaint / Injury', 'trim|xss_clean|required');
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean');
-//        $this->form_validation->set_rules('Doctor', 'Doctor', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('doctor', 'Doctor', 'trim|xss_clean|required');
 
         if ($this->form_validation->run() == FALSE) {
             $this->load_form($data);
@@ -69,7 +84,7 @@ class Opd_Visit extends FormController
                 $this->redirect_if_no_continue('');
             }
             else if ($this->input->post('SaveBtn') == 'Treatment') {
-                $this->redirect_if_no_continue('');
+                $this->redirect_if_no_continue('opd_visit/opd_treatment/'.$opd_id.'/?CONTINUE=opd_visit/view/'.$opd_id);
             }
             else if ($this->input->post('SaveBtn') == 'Allergies') {
                 $this->redirect_if_no_continue('patient_allergy/add/'.$pid.'/?CONTINUE=patient/view/'.$pid);
@@ -104,6 +119,19 @@ class Opd_Visit extends FormController
         $data['default_create_user'] = $opd_visit->CreateUser;
         $data['default_last_update'] = $opd_visit->LastUpDate;
         $data['default_last_update_user'] = $opd_visit->LastUpDateUser;
+
+        $data["opd_visits_info"] = $this->m_opd_visit->as_array()->get($opdid);
+        $visit_date = $data["opd_visits_info"]["DateTimeOfVisit"];
+        if ($this->isOneDayOld($visit_date) >= 1 ) $data['isOpened'] = false;
+        else $data['isOpened'] = true;
+        if ($data['isOpened']) {
+            $data['class'] =  "formCont";
+            $data['style'] = 'left:20;';
+        }
+        else {
+            $data['class'] =  "formCont fromContBlocked";
+            $data['style'] = 'left:20;';
+        }
 
         $this->form_validation->set_rules('OnSetDate', 'Onset Date', 'trim|xss_clean|required');
         $this->form_validation->set_rules('Complaint', 'Complaint / Injury', 'trim|xss_clean|required');
@@ -175,6 +203,63 @@ class Opd_Visit extends FormController
 
         $this->load->vars($data);
         $this->load->view('opd_info');
+    }
+
+    public function opd_treatment($opdid)
+    {
+        $data = array();
+        $data['opdid'] = $opdid;
+        $opd["opd_visits_info"] = $this->m_opd_visit->as_array()->get($opdid);
+        $data['pid'] = $opd["opd_visits_info"]["PID"];
+        $data['default_treatment'] = '';
+        $data['dropdown_treatment'] = $this->get_dropdown_treatment('result');
+        $data['default_treatment']='';
+        $data['default_active'] = '';
+        $data['default_remarks'] = '';
+
+        $data['default_create_date'] = date("Y-m-d H:i:s");
+        $data['default_create_user'] = $this->session->userdata('name') . ' ' . $this->session->userdata('other_name');
+        $data['default_last_update'] = '';
+        $data['default_last_update_user'] = '';
+
+        $this->form_validation->set_rules('treatment', 'Treatment', 'trim|xss_clean|required');
+//        $this->form_validation->set_rules('Doctor', 'Doctor', 'trim|xss_clean|required');
+
+        if ($this->form_validation->run() == FALSE) {
+            $this->render('opd_treatment', $data);
+        } else {
+            $insert_data = array(
+                'OPDID' => $opdid,
+                'Status' => 'Pending',
+                'Treatment' => $this->input->post('treatment'),
+                'Remarks' => $this->input->post('remarks'),
+                'Active' => $this->input->post('active'),
+                'CreateUser' => $this->session->userdata('name') . ' ' . $this->session->userdata('other_name')
+            );
+            $this->m_opd_treatment->insert($insert_data);
+
+            $this->session->set_flashdata(
+                'msg', 'REC: ' . ucfirst($opdid . ' opd treatment created')
+            );
+
+            $this->redirect_if_no_continue('opd_visit/view/' . $opdid);
+
+        }
+    }
+
+    public function get_dropdown_treatment($type = 'json')
+    {
+//        $this->load->model('m_treatments');
+//        $result = $this->m_treatments->select('*')->from('treatment')->where('Active', TRUE)->where('Type', 'OPD')->order_by('Treatment')->dropdown('Treatment', 'Treatment');
+        $query = $this->db->query('SELECT Treatment FROM treatment WHERE (Active = true) AND (Type = "OPD") ORDER BY Treatment');
+        $result = array();
+        foreach ($query->result_array() as $row){
+            $result += array($row['Treatment'] => $row['Treatment']);
+        }
+        if ($type == 'json') {
+            print(json_encode($result));
+        }
+        return $result;
     }
 
     public function refer_to_adm($opd_id)

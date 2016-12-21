@@ -22,7 +22,7 @@ class MY_Form extends FormController
     /**
      * Submit form to current URL including GET parameters
      */
-    public function form_open_current_url()
+    public function form_open_current_url($style = 'left:100;', $class = 'formcont')
     {
         echo '<div id="MDSError" class="mdserror" style="display: none;" onload="error();">'.validation_errors().'</div>';
         echo '<script type="text/javascript">';
@@ -34,7 +34,7 @@ class MY_Form extends FormController
 //        echo '    a.style.display="none" }';
         echo '}';
         echo '</script>';
-        echo '<div id="formCont" class="formCont" style="left:100;">';
+        echo '<div id="formCont" class="'.$class.'" style="'.$style.'">';
         echo '<form id="frm" method="post" action="">';
 
     }
@@ -370,6 +370,20 @@ class MY_Form extends FormController
         echo '<div class="fieldCont">';
         echo form_label($label, $name, $data_label);
         echo form_dropdown($name, $option, $selected_value, $dropdown_extra);
+        echo form_error($name);
+        echo '</div>';
+    }
+
+    public function dropdown_treatment($label = '', $name = '', $option = array(), $selected_value = '', $extra = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+        $dropdown_extra = 'class="input" id="' . $name . '" ' . $extra;
+        echo '<div class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo form_dropdown($name, $option, $selected_value, $dropdown_extra);
+        echo '<img src="'.base_url().'images/add.png" width="15" height="15" valign="middle" style="cursor:pointer;" onclick="javascript:location.href=\''.site_url().'/treatments/create\'">';
         echo form_error($name);
         echo '</div>';
     }
