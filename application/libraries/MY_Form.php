@@ -68,6 +68,12 @@ class MY_Form extends FormController
         echo '</div>';
     }
 
+    public function input_date($label = '', $name = '', $default_value = '', $place_holder = '')
+    {
+        $js = 'onmousedown="onmousedown=$(\'#' . $name . '\').datepicker({changeMonth: true,changeYear: true,yearRange: \'c-40:c+40\',dateFormat: \'yy-mm-dd\',maxDate: \'+0D\'});"';
+        $this->input($label, $name, $default_value, $place_holder, $js);
+    }
+
     public function input_inline_checkbox($label = '', $name = '', $default_value = '', $place_holder = '', $checkbox_label, $default_checked)
     {
         $data_label = array(
@@ -184,6 +190,27 @@ class MY_Form extends FormController
         echo '</div>';
     }
 
+    public function input_bed($label = '', $name = '', $default_value = '', $place_holder = '', $extra = '')
+    {
+        $data_label = array(
+            'class' => 'caption',
+        );
+        $data_text = array(
+            'class' => 'input',
+            'name' => $name,
+            'id' => $name,
+            'placeholder' => $place_holder,
+            'style' => 'width:200;',
+            'pos' => '2',
+        );
+        echo '<div class="fieldCont">';
+        echo form_label($label, $name, $data_label);
+        echo form_input($data_text, set_value($name, $default_value), $extra);
+        echo form_error($name);
+        echo '<img src="'.base_url().'images/refresh.png" width="20" height="20" valign="middle" style="cursor:pointer" onclick="getBHT(\'BHT\')">';
+        echo '</div>';
+    }
+
     public function input_patient_name($label = '', $name = '', $default_value = '', $place_holder = '', $extra = '')
     {
         $data_label = array(
@@ -209,12 +236,6 @@ class MY_Form extends FormController
         echo '                  })';
         echo '</script>';
         echo '</div>';
-    }
-
-    public function input_date($label = '', $name = '', $default_value = '', $place_holder = '')
-    {
-        $js = 'onmousedown="onmousedown=$(\'#' . $name . '\').datepicker({changeMonth: true,changeYear: true,yearRange: \'c-40:c+40\',dateFormat: \'yy-mm-dd\',maxDate: \'+0D\'});"';
-        $this->input($label, $name, $default_value, $place_holder, $js);
     }
 
     public function text_area($label = '', $name = '', $default_value = '', $place_holder = '', $extra = '')

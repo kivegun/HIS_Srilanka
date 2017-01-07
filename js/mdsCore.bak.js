@@ -440,14 +440,14 @@ function callAjax(f,arg,ocont){
     }).responseText;
     $( "#"+ocont ).html(ihtml);	
 }
-function getBHT(f,arg,ocont){
-    var ihtml=$.ajax({
-        url: "include/php_ajax.php?f="+f+"&arg="+arg+"&bht="+$( "#BHT" ).val()+"",
-        global: false,
-        type: "GET",
-        async:false
+function getBHT(ocont) {
+    var ihtml = $.ajax({
+        url : document.location.origin + "/HIS_Srilanka/index.php/admission/getBHT?bht=" + $("#BHT").val() + "",
+        global : false,
+        type : "GET",
+        async : false
     }).responseText;
-    $( "#"+ocont ).val(ihtml);	
+    $("#" + ocont).val(ihtml);
 }
 function makeItMainAjax(id,admid){
     var ihtml=$.ajax({

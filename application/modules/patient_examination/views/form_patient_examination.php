@@ -6,7 +6,7 @@
             $form_generator = new MY_Form('Patient Examination');
             $form_generator->form_open_current_url();
 
-            $form_generator->input('*Examination Date', 'examination_date', $default_exam_date);
+            $form_generator->input_date('*Examination Date', 'examination_date', $default_exam_date);
             $form_generator->input_number('Weight in KG', 'weight', $default_weight, 'min=0 max=300 step=0.5', 'E.g. 50');
             $form_generator->input_number('Height in M', 'height', $default_height, 'min=0 max=2.5 step=0.01', 'E.g. 1.7');
             echo '</br>';

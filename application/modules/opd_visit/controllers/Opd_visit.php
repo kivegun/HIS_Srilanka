@@ -78,7 +78,7 @@ class Opd_Visit extends FormController
                 $this->redirect_if_no_continue('');
             }
             else if ($this->input->post('SaveBtn') == 'Labtests') {
-                $this->redirect_if_no_continue('');
+                $this->redirect_if_no_continue('patient_lab_order/create/'.$pid.'/'.$opd_id.'/?CONTINUE=opd_visit/view/'.$opd_id);
             }
             else if ($this->input->post('SaveBtn') == 'Prescription') {
                 $this->redirect_if_no_continue('');
@@ -158,7 +158,7 @@ class Opd_Visit extends FormController
     public function get_dropdown_visit_type($type = 'json')
     {
         $this->load->model('m_visit_type');
-        $result = $this->m_visit_type->order_by('name')->dropdown('Name', 'Name');
+        $result = $this->m_visit_type->order_by('Name')->dropdown('Name', 'Name');
         if ($type == 'json') {
             print(json_encode($result));
         }

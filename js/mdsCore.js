@@ -773,24 +773,17 @@ var message_date = $("#message_date").val();
 			sent_deleted:sent_deleted,
 			read:read,
 			message_date:message_date
-		
     		    	 },
-	 
         success: function(data)
         {
-         
-		
-			
+
         }
-    }); 
-
-
+    });
 }
 
-function getBHT(f, arg, ocont) {
+function getBHT(ocont) {
     var ihtml = $.ajax({
-        url : "include/php_ajax.php?f=" + f + "&arg=" + arg + "&bht="
-        + $("#BHT").val() + "",
+        url : document.location.origin + "/HIS_Srilanka/index.php/admission/get_bht/?bht=" + $("#BHT").val(),
         global : false,
         type : "GET",
         async : false
