@@ -130,7 +130,6 @@
             //var dataUrl = canvas.toDataURL();
 
             $.ajax({
-
                 type :'POST',
                 url : document.location.origin + "/HIS_Srilanka/index.php/patient_examination/testSave",
                 dataType : 'json',
@@ -145,10 +144,7 @@
 
                 }
             });
-
         }
-
-
 
         function canvas_save1($pid,$date)
         {
@@ -188,7 +184,7 @@
 
             $.ajax({
                 type :'POST',
-                url :'testSave2.php',
+                url : document.location.origin + "/HIS_Srilanka/index.php/admission/testSave",
                 dataType : 'json',
                 data:{
 

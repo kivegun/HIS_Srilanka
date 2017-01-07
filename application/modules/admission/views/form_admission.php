@@ -15,7 +15,7 @@
         $form_generator->dropdown('*Ward', 'ward', $dropdown_ward, $default_ward);
         $form_generator->text_area('Remarks', 'remarks', $default_remarks, '', 'onkeyup="getCannedText(this)"');
 
-        $form_generator->button_submit_sketch($pid);
+        $form_generator->button_submit_sketch($pid, '2');
         $form_generator->date_created($default_create_date, $default_create_user, $default_last_update, $default_last_update_user);
         $form_generator->form_close();
     ?>

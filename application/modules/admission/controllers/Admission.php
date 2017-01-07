@@ -50,7 +50,10 @@ class Admission extends FormController
         $data['default_last_update'] = '';
         $data['default_last_update_user'] = '';
 
-        $this->form_validation->set_rules('bed_no', 'Bed No', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('BHT', 'Bed No', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('onset_date', 'Onset Date', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('doctor', 'Doctor', 'trim|xss_clean|required');
+        $this->form_validation->set_rules('Complaint', 'Complaint', 'trim|xss_clean|required');
         $this->form_validation->set_rules('ward', 'Ward', 'trim|xss_clean|required');
         $this->form_validation->set_rules('remarks', 'Remarks', 'trim|xss_clean');
 
@@ -58,24 +61,63 @@ class Admission extends FormController
             $this->load_form($data);
         } else {
             $insert_data = array(
-                'PID' => $refer->PID,
-                'refer_from_id' => $refer_id,
-                'AdmissionDate' => $this->input->post('date_time'),
-                'Complaint' => $refer->Complaint,
+                'PID' => $pid,
+                'AdmissionDate' => date("Y-m-d H:i:s"),
+                'OnSetDate' => $this->input->post('onset_date'),
+                'BHT' => $this->input->post('BHT'),
+                'Doctor' => $this->session->userdata('uid'),
+                'Complaint' => $this->input->post('Complaint'),
                 'Remarks' => $this->input->post('remarks'),
-                'BedNo' => $this->input->post('bed_no'),
                 'Ward' => $this->input->post('ward'),
-                'Active' => 1,
-                'Doctor' => $this->get_session('uid')
+                'AdmitTo' => $this->input->post('ward')
             );
-            $admission_id = $this->m_admission->insert($insert_data);
+            $this->m_admission->insert($insert_data);
             $update_data = array(
-                'Status' => 'Referred',
-                'AdmissionID' => $admission_id
+                'Current_BHT' => $this->input->post('BHT'),
             );
-            $this->m_refer_to_adm->update($refer_id, $update_data);
-            $this->redirect_if_no_continue('admission/view/' . $admission_id);
+            $this->m_hospital->update(1, $update_data);
+            $this->redirect_if_no_continue('patient/view/' . $pid);
         }
+    }
+
+    public function testSave()
+    {
+        require 'application/config/database.php';
+
+        $gaSql['user']       = $db['default']['username'];
+        $gaSql['password']   = $db['default']['password'];
+        $gaSql['db']         = $db['default']['database'];
+        $gaSql['server']     = $db['default']['hostname'];
+
+        $con = mysqli_connect( $gaSql['server'], $gaSql['user'], $gaSql['password']  );
+
+        mysqli_select_db($con, $gaSql['db'] );
+
+        define('UPLOAD_DIR', 'admission/');
+        $img = $_POST['seid'];
+        $pid=$_POST['seid1'];
+
+        $res1="SELECT ADMID FROM admission WHERE PID=$pid ORDER BY LastUpDate DESC LIMIT 1";
+        $result1 = mysqli_query($con, $res1);
+//print $success ? $file : 'Unable to save the file.';
+
+        while ($row= mysqli_fetch_assoc($result1)){
+            $admid=$row['ADMID'];
+        }
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $data = base64_decode($img);
+        if(isset($admid)){
+            $file = UPLOAD_DIR . $admid . '.png';
+            $success = file_put_contents($file, $data);
+        }
+
+        $sql="UPDATE admission SET exam_sketch='admission/$admid.png' WHERE ADMID=$admid";
+        //$sql="UPDATE patient_exam SET exam_sketch='patient_exam/$res.png' WHERE PID=$pid AND LastUpDate='$date'";
+        $result = mysqli_query($con, $sql);
+//print $success ? $file : 'Unable to save the file.';
+
+        echo json_encode($result);
     }
 
     public function get_bht()

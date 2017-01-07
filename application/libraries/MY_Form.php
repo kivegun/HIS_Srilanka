@@ -479,7 +479,7 @@ class MY_Form extends FormController
         echo '</div>';
     }
 
-    public function button_submit_sketch($pid)
+    public function button_submit_sketch($pid, $canvas)
     {
         $date = date("Y-m-d H:i:s");
         echo '<div id="fieldCont" class="fieldCont">';
@@ -489,7 +489,7 @@ class MY_Form extends FormController
         echo '        <tbody>';
         echo '            <tr>';
         echo '                <td>';
-        echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick=\'canvas_save('.$pid.','.json_encode($date).');\'>Save</button>';
+        echo '<button class="formButton" name="SaveBtn" id="SaveBtn" type="submit" value="Save" onclick=\'canvas_save'.$canvas.'('.$pid.','.json_encode($date).');\'>Save</button>';
         echo '<button class="formButton" name="CancelBtn" id="CancelBtn" type="button" value="OK" onclick="window.history.back()">OK</button>';
         echo '                </td>';
         echo '            </tr>';

@@ -63,19 +63,6 @@ class Patient_Examination extends FormController
         }
     }
 
-    public function check_pass2($pass2)
-    {
-        require 'application/config/database.php';
-        if ($pass2 != $db['default']['password_2'])
-        {
-            $this->form_validation->set_message('check_pass2', 'The password 2 you supplied does not match your existing password 2.');
-            return FALSE;
-        }
-        else {
-            return TRUE;
-        }
-    }
-
     public function edit($examination_id)
     {
         $exam = $this->m_patient_examination->get($examination_id);
@@ -146,15 +133,9 @@ class Patient_Examination extends FormController
 
         mysqli_select_db($con, $gaSql['db'] );
 
-// requires php5
         define('UPLOAD_DIR', 'patient_exam/');
         $img = $_POST['seid'];
-//$date=date("Y-m-d h:i:s");
         $pid=$_POST['seid1'];
-//$date=$_POST['seid2'];
-
-//$res = $pid . "_" . $date;
-//$res=$patexamid;
 
         $res1="SELECT PATEXAMID FROM patient_exam WHERE PID=$pid ORDER BY LastUpDate DESC LIMIT 1";
         $result1 = mysqli_query($con, $res1);
